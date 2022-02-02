@@ -23,8 +23,8 @@ export default {
   layout: 'auth',
   data() {
     return {
-      email: 'hey@coolstud.io',
-      password: 'password',
+      email: null,
+      password: null,
     }
   },
   methods: {
