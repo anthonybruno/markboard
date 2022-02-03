@@ -63,14 +63,8 @@ export default {
     },
   },
   methods: {
-    async deleteBookmark() {
-      await this.$fire.firestore
-        .collection('users')
-        .doc(this.userId)
-        .collection('bookmarks')
-        .doc(this.id)
-        .delete()
-      alert('Deleted! Refresh the page.')
+    deleteBookmark() {
+      this.$store.dispatch('deleteBookmark', this.id)
     },
   },
 }

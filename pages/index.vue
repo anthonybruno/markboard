@@ -40,6 +40,7 @@ export default {
       tagQuery: null,
       bookmarkLimit: 100,
       hasPreviousEntries: false,
+      syncDocs: [],
     }
   },
   computed: {
@@ -56,10 +57,6 @@ export default {
     hasBookmarks() {
       return this.bookmarks && this.bookmarks.length > 0
     },
-  },
-  created() {
-    this.getTags()
-    this.getAllBookmarks()
   },
   methods: {
     // async filterBookmarks(filterVal) {
@@ -112,21 +109,6 @@ export default {
 
     //   await batch.commit()
     // },
-    getAllBookmarks() {
-      // const bookmarks = []
-      // const bookmarksRef = await this.$fire.firestore
-      //   .collection('users')
-      //   .doc(this.userId)
-      //   .collection('bookmarks')
-      //   .orderBy('createdAt', 'desc')
-      //   .limit(this.bookmarkLimit)
-      //   .get()
-      // bookmarksRef.forEach((bookmark) => {
-      //   bookmarks.push({ id: bookmark.id, data: bookmark.data() })
-      // })
-      // this.bookmarks = bookmarks
-      this.$store.dispatch('getAllBookmarks')
-    },
     async getBookmarksWithTag(tag) {
       const bookmarks = []
       const bookmarksRef = await this.$fire.firestore
@@ -141,9 +123,9 @@ export default {
       this.bookmarks = bookmarks
     },
 
-    getTags() {
-      this.$store.dispatch('getAllTags')
-    },
+    // getTags() {
+    //   this.$store.dispatch('getAllTags')
+    // },
 
     addTag() {
       this.$store.dispatch('createTag', this.tagName)
@@ -191,14 +173,6 @@ export default {
       })
 
       batch.commit()
-    },
-    deleteBookmark(bookmarkId) {
-      this.$fire.firestore
-        .collection('users')
-        .doc(this.userId)
-        .collection('bookmarks')
-        .doc(bookmarkId)
-        .delete()
     },
   },
 }

@@ -1,13 +1,14 @@
+import { vuexfireMutations, firestoreAction } from 'vuexfire'
+
 const getDefaultState = () => {
   return {
-    userEmail: null,
     userId: null,
-    userVerifiedEmail: null,
     bookmarks: [],
     tags: [],
   }
 }
 
+// export const state = getDefaultState()
 export const state = getDefaultState()
 
 export const getters = {
@@ -16,9 +17,6 @@ export const getters = {
   },
   tags(state) {
     return state.tags
-  },
-  userEmail(state) {
-    return state.userEmail
   },
   userId(state) {
     return state.userId
@@ -32,9 +30,6 @@ export const mutations = {
   authUser() {
     this.app.router.push({ name: 'index' })
   },
-  updateBookmarks(state, bookmarksArr) {
-    state.bookmarks = bookmarksArr
-  },
   updateTags(state, tagsArr) {
     state.tags = tagsArr
   },
@@ -46,55 +41,59 @@ export const mutations = {
     state.bookmarks = [bookmarkObj, ...state.bookmarks]
   },
   updateAuthUser(state, { authUser, isLoggingIn }) {
-    const { uid, email, emailVerified } = authUser
+    const { uid } = authUser
     state.userId = uid
-    state.userEmail = email
-    state.userVerifiedEmail = emailVerified
     if (isLoggingIn) this.app.router.push({ name: 'index' })
   },
+  ...vuexfireMutations,
 }
 
 export const actions = {
-  async getAllBookmarks({ commit, state }) {
-    const bookmarks = []
-    const bookmarksRef = await this.$fire.firestore
+  bindBookmarks: firestoreAction(async function ({ state, bindFirestoreRef }) {
+    const ref = this.$fire.firestore
       .collection('users')
       .doc(state.userId)
       .collection('bookmarks')
       .orderBy('createdAt', 'desc')
-      .get()
-    bookmarksRef.forEach((bookmark) => {
-      bookmarks.push({ id: bookmark.id, ...bookmark.data() })
-    })
-    commit('updateBookmarks', bookmarks)
-  },
+    await bindFirestoreRef('bookmarks', ref, { wait: true })
+  }),
+  unbindBookmarks: firestoreAction(function ({ unbindFirestoreRef }) {
+    unbindFirestoreRef('bookmarks', false)
+  }),
+  bindTags: firestoreAction(async function ({ state, bindFirestoreRef }) {
+    const ref = this.$fire.firestore
+      .collection('users')
+      .doc(state.userId)
+      .collection('tags')
+      .orderBy('name', 'asc')
+    await bindFirestoreRef('tags', ref, { wait: true })
+  }),
+  unbindTags: firestoreAction(function ({ unbindFirestoreRef }) {
+    unbindFirestoreRef('tags', false)
+  }),
   async createBookmark({ commit, state }, { name, tags }) {
+    const docRef = this.$fire.firestore
+      .collection('users')
+      .doc(state.userId)
+      .collection('bookmarks')
+      .doc()
     const bookmarkObj = {
+      id: docRef.id,
       createdAt: Date.now(),
       lastUpdated: Date.now(),
       name,
       tags,
     }
+    await docRef.set(bookmarkObj)
+    this.$router.push({ name: 'index' })
+  },
+  async deleteBookmark({ state }, bookmarkId) {
     await this.$fire.firestore
       .collection('users')
       .doc(state.userId)
       .collection('bookmarks')
-      .doc()
-      .set(bookmarkObj)
-    commit('appendBookmark', bookmarkObj)
-  },
-  async getAllTags({ commit, state }) {
-    const tags = []
-    const tagsRef = await this.$fire.firestore
-      .collection('users')
-      .doc(state.userId)
-      .collection('tags')
-      .orderBy('name', 'asc')
-      .get()
-    tagsRef.forEach((tag) => {
-      tags.push(tag.data().name)
-    })
-    commit('updateTags', tags)
+      .doc(bookmarkId)
+      .delete()
   },
   async createTag({ commit, state }, tagName) {
     await this.$fire.firestore
@@ -107,14 +106,48 @@ export const actions = {
       })
     commit('appendTags', tagName)
   },
-  onAuthStateChanged({ commit, state }, { authUser, claims }) {
+  async batchCreateBookmarkTags({ state }, { newTags, selectedTags, name }) {
+    const batch = await this.$fire.firestore.batch()
+    const bookmarkRef = this.$fire.firestore
+      .collection('users')
+      .doc(state.userId)
+      .collection('bookmarks')
+      .doc()
+
+    newTags.forEach((newTag) => {
+      const tagRef = this.$fire.firestore
+        .collection('users')
+        .doc(state.userId)
+        .collection('tags')
+        .doc(newTag)
+      batch.set(tagRef, {
+        name: newTag,
+      })
+    })
+
+    batch.set(bookmarkRef, {
+      id: bookmarkRef.id,
+      createdAt: Date.now(),
+      lastUpdated: Date.now(),
+      name,
+      tags: [...newTags, ...selectedTags],
+    })
+
+    batch.commit()
+    this.$router.push({ name: 'index' })
+  },
+  logout({ dispatch, commit }) {
+    commit('resetDefaultState')
+    dispatch('unbindBookmarks')
+    dispatch('unbindTags')
+    this.app.router.push({ name: 'signin' })
+  },
+  onAuthStateChanged({ dispatch, commit, state }, { authUser, claims }) {
     // https://firebase.nuxtjs.org/service-options/auth#onauthstatechangedmutation
     if (authUser) {
       commit('updateAuthUser', { authUser, isLoggingIn: state.userId === null })
     } else {
-      // Logout
-      commit('resetDefaultState')
-      this.app.router.push({ name: 'signin' })
+      dispatch('logout')
     }
   },
 }

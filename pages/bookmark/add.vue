@@ -18,16 +18,16 @@
 
         <div class="saved-tags">
           <ul>
-            <li v-for="tag in tags" :key="tag">
+            <li v-for="tag in tags" :key="tag.name">
               <input
-                :id="tag"
-                v-model="selectedSavedTags"
+                :id="tag.name"
+                v-model="selectedTags"
                 class="form-check-input"
                 type="checkbox"
-                :value="tag"
+                :value="tag.name"
               />
-              <label :for="tag">
-                {{ tag }}
+              <label :for="tag.name">
+                {{ tag.name }}
               </label>
             </li>
           </ul>
@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       name: null,
-      selectedSavedTags: [],
+      selectedTags: [],
       newTags: null,
     }
   },
@@ -102,48 +102,19 @@ export default {
       return null
     },
   },
-  created() {
-    this.$store.dispatch('getAllTags')
-  },
   methods: {
     addBookmarkAndTags() {
-      const batch = this.$fire.firestore.batch()
-      const bookmarkRef = this.$fire.firestore
-        .collection('users')
-        .doc(this.userId)
-        .collection('bookmarks')
-        .doc()
-
-      this.formattedNewTags.forEach((newTag) => {
-        const tagRef = this.$fire.firestore
-          .collection('users')
-          .doc(this.userId)
-          .collection('tags')
-          .doc(newTag)
-        batch.set(tagRef, {
-          name: newTag,
-        })
-      })
-
-      batch.set(bookmarkRef, {
-        createdAt: Date.now(),
+      this.$store.dispatch('batchCreateBookmarkTags', {
+        newTags: this.formattedNewTags,
+        selectedTags: this.selectedTags,
         name: this.name,
-        tags: this.formattedNewTags,
-      })
-
-      batch.commit().then(() => {
-        this.$router.push({ name: 'index' })
       })
     },
     addBookmark() {
-      this.$store
-        .dispatch('createBookmark', {
-          name: this.name,
-          tags: this.selectedSavedTags,
-        })
-        .then(() => {
-          this.$router.push({ name: 'index' })
-        })
+      this.$store.dispatch('createBookmark', {
+        name: this.name,
+        tags: this.selectedTags,
+      })
     },
   },
 }

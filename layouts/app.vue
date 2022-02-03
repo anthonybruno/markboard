@@ -20,6 +20,14 @@
 <script>
 export default {
   name: 'App',
+  async mounted() {
+    try {
+      await this.$store.dispatch('bindBookmarks')
+      await this.$store.dispatch('bindTags')
+    } catch (e) {
+      console.error(e)
+    }
+  },
   methods: {
     async signOut() {
       try {
