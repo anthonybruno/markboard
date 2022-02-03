@@ -5,6 +5,7 @@ const getDefaultState = () => {
     userId: null,
     bookmarks: [],
     tags: [],
+    tagFilter: null,
   }
 }
 
@@ -37,6 +38,9 @@ export const mutations = {
     state.tags.push(tag)
     state.tags = state.tags.sort()
   },
+  updateActiveTagFilter(state, tag) {
+    state.tagFilter = tag
+  },
   appendBookmark(state, bookmarkObj) {
     state.bookmarks = [bookmarkObj, ...state.bookmarks]
   },
@@ -50,11 +54,14 @@ export const mutations = {
 
 export const actions = {
   bindBookmarks: firestoreAction(async function ({ state, bindFirestoreRef }) {
-    const ref = this.$fire.firestore
+    let ref = this.$fire.firestore
       .collection('users')
       .doc(state.userId)
       .collection('bookmarks')
       .orderBy('createdAt', 'desc')
+    if (state.tagFilter)
+      ref = ref.where('tags', 'array-contains', state.tagFilter)
+
     await bindFirestoreRef('bookmarks', ref, { wait: true })
   }),
   unbindBookmarks: firestoreAction(function ({ unbindFirestoreRef }) {

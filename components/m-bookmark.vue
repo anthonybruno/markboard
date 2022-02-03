@@ -9,7 +9,7 @@
       <div class="actions">
         <ul>
           <li>
-            <a href="#" @click.prevent="deleteBookmark()"> Delete </a>
+            <a href="#" @click.prevent="deleteBookmark()">Delete</a>
           </li>
         </ul>
       </div>
@@ -19,7 +19,9 @@
       <ul v-if="hasTags">
         <li><strong>Tagged</strong></li>
         <li v-for="(tag, tagIndex) in tags" :key="tagIndex">
-          {{ tag }}
+          <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag } }">
+            {{ tag }}
+          </NuxtLink>
         </li>
       </ul>
     </div>
