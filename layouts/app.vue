@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div v-if="loaded" class="wrapper">
     <header>
       <div class="logo">
         <m-logo />
@@ -20,10 +20,16 @@
 <script>
 export default {
   name: 'App',
-  async mounted() {
+  data() {
+    return {
+      loaded: false,
+    }
+  },
+  async created() {
     try {
       await this.$store.dispatch('bindBookmarks')
       await this.$store.dispatch('bindTags')
+      this.loaded = true
     } catch (e) {
       console.error(e)
     }

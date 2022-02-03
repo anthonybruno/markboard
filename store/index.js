@@ -137,10 +137,17 @@ export const actions = {
     this.$router.push({ name: 'index' })
   },
   logout({ dispatch, commit }) {
-    commit('resetDefaultState')
-    dispatch('unbindBookmarks')
-    dispatch('unbindTags')
-    this.app.router.push({ name: 'signin' })
+    const route = this.$router.push({ name: 'signin' })
+    function routerPromise() {
+      return new Promise((resolve) => {
+        resolve(route)
+      })
+    }
+    routerPromise().then(() => {
+      commit('resetDefaultState')
+      dispatch('unbindBookmarks')
+      dispatch('unbindTags')
+    })
   },
   onAuthStateChanged({ dispatch, commit, state }, { authUser, claims }) {
     // https://firebase.nuxtjs.org/service-options/auth#onauthstatechangedmutation
