@@ -48,7 +48,7 @@ export default {
     },
     async deleteAccount() {
       const currentUser = this.$fire.auth.currentUser
-      const confirmDelete = await confirm(this.userId) // eslint-disable-line
+      const confirmDelete = await confirm('Are you sure? This is it...') // eslint-disable-line
       if (confirmDelete) {
         await this.$fire.firestore.collection('users').doc(this.userId).delete()
         await currentUser.delete()

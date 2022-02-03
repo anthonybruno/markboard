@@ -35,4 +35,14 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+button {
+  appearance: none;
+  border: 0;
+  background-color: #559cad;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+</style>

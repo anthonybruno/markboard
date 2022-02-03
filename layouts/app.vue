@@ -1,16 +1,10 @@
 <template>
-  <div>
+  <div class="wrapper">
     <header>
+      <div class="logo">
+        <m-logo />
+      </div>
       <ul>
-        <li>
-          <NuxtLink to="/">Home</NuxtLink>
-        </li>
-        <!-- <li>
-          <NuxtLink :to="{ name: 'bookmarks' }">Your bookmarks</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink :to="{ name: 'bookmarks-add' }">Add bookmark</NuxtLink>
-        </li> -->
         <li>
           <NuxtLink :to="{ name: 'settings' }">Settings</NuxtLink>
         </li>
@@ -38,4 +32,24 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.wrapper {
+  max-width: 1000px;
+  margin: 30px auto;
+}
+header {
+  overflow: hidden;
+}
+.logo {
+  float: left;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  height: 100%;
+  float: right;
+}
+li {
+  display: inline-block;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="input">
     <label v-if="label" :for="id">
       {{ label }}
     </label>
@@ -45,9 +45,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 label {
   display: block;
   font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 3px;
+}
+input {
+  padding: 5px 10px;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 </style>

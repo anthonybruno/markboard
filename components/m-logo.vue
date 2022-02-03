@@ -1,5 +1,7 @@
 <template>
-  <h1>MarkBoard</h1>
+  <h1>
+    <NuxtLink to="/">MarkBoard</NuxtLink>
+  </h1>
 </template>
 
 <script>

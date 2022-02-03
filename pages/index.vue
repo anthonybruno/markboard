@@ -1,70 +1,25 @@
 <template>
   <div>
-    <h1>Welcome {{ userEmail }}</h1>
-
-    <h4>Create bookmark</h4>
-    <m-input id="name" v-model="name" type="text" placeholder="Bookmark name" />
-
-    <template v-if="tags.length > 0">
-      <div v-for="tag in tags" :key="tag">
-        <input
-          :id="tag"
-          v-model="selectedTags"
-          class="form-check-input"
-          type="checkbox"
-          :value="tag"
-        />
-        {{ tag }}
-      </div>
+    <template v-if="!hasBookmarks">
+      <h1>Looks like you don't have any bookmarks yet ya doofus!</h1>
+      <NuxtLink :to="{ name: 'bookmark-add' }">Add a bookmark</NuxtLink>
     </template>
-    <br />
 
-    <m-input
-      id="new-tags"
-      v-model="newTags"
-      type="text"
-      placeholder="Add new tag"
-    />
-    <m-button
-      label="Add bookmark"
-      @click="newTags ? addBookmarkAndTags() : addBookmark()"
-    />
+    <template v-else>
+      <h1>
+        Your bookmarks
+        <NuxtLink :to="{ name: 'bookmark-add' }">+</NuxtLink>
+      </h1>
 
-    <br /><br />
-    <h5>Tags</h5>
-    <m-input
-      id="add-tag"
-      v-model="tagName"
-      label="Add tag"
-      type="text"
-      placeholder="Add new tag"
-    />
-    <m-button label="Add tag" @click="addTag()" />
-
-    <br /><br />
-    <h5>Bookmarks</h5>
-
-    <m-input
-      id="bookmark-limit"
-      v-model="bookmarkLimit"
-      label="Number of bookmarks to return"
-      type="text"
-      placeholder="100"
-    />
-    <m-button label="Get bookmarks" @click="getAllBookmarks()" />
-
-    <br /><br />
-
-    <m-bookmark
-      v-for="bookmark in bookmarks"
-      :id="bookmark.id"
-      :key="bookmark.id"
-      :name="bookmark.name"
-      :created="bookmark.createdAt"
-      :tags="bookmark.tags"
-    />
-
-    <br /><br /><br />
+      <m-bookmark
+        v-for="bookmark in bookmarks"
+        :id="bookmark.id"
+        :key="bookmark.id"
+        :name="bookmark.name"
+        :created="bookmark.createdAt"
+        :tags="bookmark.tags"
+      />
+    </template>
   </div>
 </template>
 
@@ -97,6 +52,9 @@ export default {
     formattedNewTags() {
       if (this.newTags) return this.newTags.split(' ')
       return null
+    },
+    hasBookmarks() {
+      return this.bookmarks && this.bookmarks.length > 0
     },
   },
   created() {

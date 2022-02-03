@@ -1,13 +1,15 @@
 <template>
   <div>
-    <m-input id="email" v-model="email" label="Email" type="email" />
-    <m-input
-      id="password"
-      v-model="password"
-      label="Password"
-      type="password"
-    />
-    <m-button label="Sign in" type="submit" @click="formSubmit()" />
+    <form @submit.prevent="formSubmit()">
+      <m-input id="email" v-model="email" label="Email" type="email" />
+      <m-input
+        id="password"
+        v-model="password"
+        label="Password"
+        type="password"
+      />
+      <m-button label="Sign in" type="submit" @click="formSubmit()" />
+    </form>
 
     <br />
     <br />
