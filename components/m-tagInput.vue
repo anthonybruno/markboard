@@ -17,6 +17,7 @@
         v-for="(tag, tagIndex) in filteredSavedTags"
         :key="tagIndex"
         :class="[{ selected: keyTagIndex === tagIndex }]"
+        @mouseover="keyTagIndex = tagIndex"
       >
         <a href="#" @click.prevent="tagChosen(tag.name)">{{ tag.name }}</a>
       </li>
@@ -127,15 +128,12 @@ ul {
   width: 100%;
 }
 li.selected {
-  background-color: #1c6e8c;
+  background-color: #f2cc8f;
 }
 li a {
-  display: inline-block;
+  display: block;
   color: #000;
   text-decoration: none;
   padding: 3px;
-}
-.selected a {
-  color: #fff;
 }
 </style>

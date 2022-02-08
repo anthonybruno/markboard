@@ -46,7 +46,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .wrapper {
   max-width: 1000px;
   margin: 30px auto;
@@ -57,13 +57,17 @@ header {
 .logo {
   float: left;
 }
-ul {
+header ul {
   list-style: none;
   padding: 0;
   height: 100%;
   float: right;
 }
-li {
+header li {
   display: inline-block;
+}
+
+a {
+  color: #e07a5f;
 }
 </style>
