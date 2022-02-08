@@ -1,6 +1,6 @@
 <template>
   <h1>
-    <NuxtLink to="/">MarkBoard</NuxtLink>
+    <NuxtLink to="/">mrkbrd</NuxtLink>
   </h1>
 </template>
 
