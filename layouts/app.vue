@@ -50,6 +50,10 @@ export default {
 .wrapper {
   max-width: 1000px;
   margin: 30px auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 header {
   overflow: hidden;
@@ -65,9 +69,13 @@ header ul {
 }
 header li {
   display: inline-block;
+  font-weight: bold;
 }
 
 a {
   color: #e07a5f;
+}
+a:hover {
+  text-decoration: none;
 }
 </style>
