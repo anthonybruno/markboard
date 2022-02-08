@@ -5,10 +5,15 @@
     </label>
     <input
       :id="id"
+      :ref="refName"
       :type="type"
       :value="value"
       :placeholder="placeholder"
       @input="$emit('input', $event.target.value)"
+      @keyup.down="$emit('down')"
+      @keyup.up="$emit('up')"
+      @keyup.esc="$emit('esc')"
+      @keyup.enter="$emit('enter', $event)"
     />
   </div>
 </template>
@@ -29,6 +34,10 @@ export default {
       type: String,
       default: null,
     },
+    refName: {
+      type: String,
+      default: null,
+    },
     placeholder: {
       type: String,
       default: null,
@@ -40,6 +49,16 @@ export default {
       validator(value) {
         return ['text', 'email', 'password'].includes(value)
       },
+    },
+  },
+  computed: {
+    refInFocus() {
+      return this.$store.getters.refInFocus
+    },
+  },
+  watch: {
+    refInFocus(newVal, oldVal) {
+      if (newVal === this.refName) this.$refs[this.refName].focus()
     },
   },
 }
@@ -56,5 +75,6 @@ input {
   padding: 5px 10px;
   font-size: 20px;
   margin-bottom: 10px;
+  border: 1px solid #999;
 }
 </style>

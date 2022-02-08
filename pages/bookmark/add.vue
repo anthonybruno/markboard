@@ -13,58 +13,9 @@
         placeholder="https://youtu.be/N66hCzg7IMw"
       />
 
-      <template v-if="hasTags">
-        <h5>Pre-existing tags:</h5>
-
-        <div class="saved-tags">
-          <ul>
-            <li v-for="tag in tags" :key="tag.name">
-              <input
-                :id="tag.name"
-                v-model="selectedTags"
-                class="form-check-input"
-                type="checkbox"
-                :value="tag.name"
-              />
-              <label :for="tag.name">
-                {{ tag.name }}
-              </label>
-            </li>
-          </ul>
-        </div>
-
-        <m-input
-          id="new-tags"
-          v-model="newTags"
-          type="text"
-          placeholder="...or add tags on submit"
-        />
-        <p>
-          <em>"pizza hut" will be saved as two tags</em>
-        </p>
-        <br /><br />
-      </template>
-
-      <template v-else>
-        <br /><br />
-        <h2>Want to assign some tags to your bookmark?</h2>
-        <p>
-          <strong>Heads up:</strong>
-          Just know that tags can only be single words. If you want to add
-          multiple tags, just add a space between words.
-          <br /><br />
-          <em>For example.. "pizza hut" will be saved as two tags</em>
-        </p>
-        <br />
-        <m-input
-          id="new-tags"
-          v-model="newTags"
-          label="My first tags are:"
-          type="text"
-          placeholder="pizza hut"
-        />
-        <br /><br />
-      </template>
+      <br /><br />
+      <m-tagInput @input="updateTags($event)" />
+      <br /><br />
 
       <m-button
         label="Save bookmark"
@@ -97,15 +48,15 @@ export default {
     hasTags() {
       return this.tags && this.tags.length > 0
     },
-    formattedNewTags() {
-      if (this.newTags) return this.newTags.split(' ')
-      return null
-    },
   },
   methods: {
+    updateTags({ newTags, selectedTags }) {
+      this.newTags = newTags
+      this.selectedTags = selectedTags
+    },
     addBookmarkAndTags() {
       this.$store.dispatch('batchCreateBookmarkTags', {
-        newTags: this.formattedNewTags,
+        newTags: this.newTags,
         selectedTags: this.selectedTags,
         name: this.name,
       })
