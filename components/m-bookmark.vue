@@ -1,30 +1,72 @@
 <template>
-  <div class="bookmark">
-    <header>
-      <div class="details">
-        <h2>{{ name }}</h2>
-        <em>{{ formatDate }}</em>
-      </div>
+  <div
+    :ref="id"
+    class="bookmark"
+    tabindex="-1"
+    @keydown.esc="cancelEditBookmark()"
+  >
+    <template v-if="isEditState">
+      <header>
+        <div class="actions">
+          <ul>
+            <li>
+              <a href="#" @click.prevent="cancelEditBookmark()">Cancel</a>
+            </li>
+          </ul>
+        </div>
+      </header>
 
-      <div class="actions">
-        <ul>
-          <li>
-            <a href="#" @click.prevent="deleteBookmark()">Delete</a>
+      <m-input
+        id="name"
+        v-model="newName"
+        label="Website URL"
+        type="text"
+        placeholder="https://youtu.be/N66hCzg7IMw"
+      />
+      <m-tagInput
+        label="Tags"
+        placeholder="Books Websites"
+        :existing-tags="tags"
+        @input="updateTags($event)"
+      />
+
+      <br /><br />
+      <m-button
+        label="Update"
+        @click="newTags ? updateBookmarkAndTags() : updateBookmark()"
+      />
+    </template>
+
+    <template v-else>
+      <header>
+        <div class="details">
+          <h2>{{ name }}</h2>
+          <em>{{ formatDate }}</em>
+        </div>
+
+        <div class="actions">
+          <ul>
+            <li>
+              <a href="#" @click.prevent="editBookmark()">Edit</a>
+            </li>
+            <li>
+              <a href="#" @click.prevent="deleteBookmark()">Delete</a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <div class="main">
+        <ul v-if="hasTags" class="tags">
+          <li><strong>Tagged</strong></li>
+          <li v-for="(tag, tagIndex) in tags" :key="tagIndex">
+            <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag } }">
+              {{ tag }}
+            </NuxtLink>
           </li>
         </ul>
       </div>
-    </header>
-
-    <div class="main">
-      <ul v-if="hasTags">
-        <li><strong>Tagged</strong></li>
-        <li v-for="(tag, tagIndex) in tags" :key="tagIndex">
-          <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag } }">
-            {{ tag }}
-          </NuxtLink>
-        </li>
-      </ul>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -51,9 +93,17 @@ export default {
       default: () => [],
     },
   },
+  data() {
+    return {
+      newName: this.name,
+      newTags: null,
+      selectedTags: this.tags,
+    }
+  },
   computed: {
     ...mapGetters({
       userId: 'userId',
+      activeEditBookmark: 'activeEditBookmark',
     }),
     hasTags() {
       return this.tags.length > 0
@@ -63,10 +113,40 @@ export default {
         addSuffix: true,
       })
     },
+    isEditState() {
+      return this.id === this.activeEditBookmark
+    },
   },
   methods: {
+    updateBookmarkAndTags() {
+      this.$store.dispatch('batchUpdateBookmarkTags', {
+        bookmarkId: this.id,
+        newTags: this.newTags,
+        selectedTags: this.selectedTags,
+        name: this.newName,
+      })
+    },
+    updateBookmark() {
+      this.$store.dispatch('updateBookmark', {
+        bookmarkId: this.id,
+        name: this.newName,
+        tags: this.selectedTags,
+      })
+    },
+    editBookmark() {
+      this.$store.commit('updateActiveEditBookmark', this.id)
+      this.$refs[this.id].focus()
+    },
+    cancelEditBookmark() {
+      this.$store.commit('updateActiveEditBookmark', null)
+      this.$refs[this.id].blur()
+    },
     deleteBookmark() {
       this.$store.dispatch('deleteBookmark', this.id)
+    },
+    updateTags({ newTags, selectedTags }) {
+      this.newTags = newTags
+      this.selectedTags = selectedTags
     },
   },
 }
@@ -74,7 +154,7 @@ export default {
 
 <style scoped>
 .bookmark {
-  border: 3px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px;
 }
 .bookmark + .bookmark {
@@ -110,5 +190,8 @@ header ul,
 }
 .main li + li {
   padding-left: 5px;
+}
+.tags a {
+  color: #00a5e0;
 }
 </style>

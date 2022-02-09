@@ -7,6 +7,7 @@ const getDefaultState = () => {
     tags: [],
     tagFilter: null,
     refInFocus: null,
+    activeEditBookmark: null,
   }
 }
 
@@ -26,6 +27,9 @@ export const getters = {
   refInFocus(state) {
     return state.refInFocus
   },
+  activeEditBookmark(state) {
+    return state.activeEditBookmark
+  },
 }
 
 export const mutations = {
@@ -44,6 +48,9 @@ export const mutations = {
   },
   updateActiveTagFilter(state, tag) {
     state.tagFilter = tag
+  },
+  updateActiveEditBookmark(state, bookmarkId) {
+    state.activeEditBookmark = bookmarkId
   },
   appendBookmark(state, bookmarkObj) {
     state.bookmarks = [bookmarkObj, ...state.bookmarks]
@@ -101,6 +108,21 @@ export const actions = {
     await docRef.set(bookmarkObj)
     this.$router.push({ name: 'index' })
   },
+  async updateBookmark({ commit, state }, { bookmarkId, name, tags }) {
+    const docRef = this.$fire.firestore
+      .collection('users')
+      .doc(state.userId)
+      .collection('bookmarks')
+      .doc(bookmarkId)
+    const bookmarkObj = {
+      lastUpdated: Date.now(),
+      name,
+      tags,
+    }
+    await docRef.update(bookmarkObj)
+    commit('updateActiveEditBookmark', null)
+    // this.$router.push({ name: 'index' })
+  },
   async deleteBookmark({ state }, bookmarkId) {
     await this.$fire.firestore
       .collection('users')
@@ -149,6 +171,37 @@ export const actions = {
 
     batch.commit()
     this.$router.push({ name: 'index' })
+  },
+  async batchUpdateBookmarkTags(
+    { commit, state },
+    { bookmarkId, newTags, selectedTags, name }
+  ) {
+    const batch = await this.$fire.firestore.batch()
+    const bookmarkRef = this.$fire.firestore
+      .collection('users')
+      .doc(state.userId)
+      .collection('bookmarks')
+      .doc(bookmarkId)
+
+    newTags.forEach((newTag) => {
+      const tagRef = this.$fire.firestore
+        .collection('users')
+        .doc(state.userId)
+        .collection('tags')
+        .doc(newTag)
+      batch.set(tagRef, {
+        name: newTag,
+      })
+    })
+
+    batch.update(bookmarkRef, {
+      lastUpdated: Date.now(),
+      name,
+      tags: [...newTags, ...selectedTags],
+    })
+
+    batch.commit()
+    commit('updateActiveEditBookmark', null)
   },
   logout({ dispatch, commit }) {
     const route = this.$router.push({ name: 'signin' })

@@ -7,10 +7,9 @@
 
     <template v-else>
       <h1>
-        Your bookmarks
+        Bookmarks
         <NuxtLink :to="{ name: 'bookmark-add' }">+</NuxtLink>
       </h1>
-
       <m-bookmark
         v-for="bookmark in bookmarks"
         :id="bookmark.id"
@@ -45,7 +44,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userEmail: 'userEmail',
       userId: 'userId',
       bookmarks: 'bookmarks',
       tags: 'tags',
@@ -109,6 +107,15 @@ export default {
 
     //   await batch.commit()
     // },
+    updateTagSearch(tags) {
+      if (tags.selectedTags.length === 1) {
+        this.$router.push({
+          name: 'tag-slug',
+          params: { slug: tags.selectedTags[0] },
+        })
+      }
+    },
+
     async getBookmarksWithTag(tag) {
       const bookmarks = []
       const bookmarksRef = await this.$fire.firestore

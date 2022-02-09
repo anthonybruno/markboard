@@ -14,7 +14,13 @@
       />
 
       <br /><br />
-      <m-tagInput @input="updateTags($event)" />
+      <m-tagInput
+        label="Tags"
+        :filter="false"
+        ref-name="addInput"
+        placeholder="Books Websites"
+        @input="updateTags($event)"
+      />
       <br /><br />
 
       <m-button

@@ -3,10 +3,10 @@
     <m-input
       id="tags"
       v-model="query"
-      ref-name="newTagInput"
-      label="Tags"
+      ref-name="tagInput"
+      :label="label"
       type="text"
-      placeholder="food blogs"
+      :placeholder="placeholder"
       @input="emitTags()"
       @up="keyboardSelectTag('up')"
       @down="keyboardSelectTag('down')"
@@ -30,6 +30,24 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'TagInput',
+  props: {
+    label: {
+      type: String,
+      default: null,
+    },
+    placeholder: {
+      type: String,
+      default: null,
+    },
+    filter: {
+      type: Boolean,
+      default: false,
+    },
+    existingTags: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       query: null,
@@ -38,9 +56,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      // userEmail: 'userEmail',
-      // userId: 'userId',
-      // bookmarks: 'bookmarks',
       tags: 'tags',
     }),
     formattedAllTags() {
@@ -67,6 +82,10 @@ export default {
       if (this.query) return this.query.trim().split(' ')
       return null
     },
+  },
+  created() {
+    if (this.existingTags.length > 0)
+      this.query = `${this.existingTags.join(' ')} `
   },
   methods: {
     tagChosen(name) {

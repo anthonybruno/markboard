@@ -39,7 +39,7 @@ export default {
 button {
   appearance: none;
   border: 0;
-  background-color: #3d405b;
+  background-color: #00a5e0;
   color: #fff;
   padding: 5px 10px;
   font-size: 18px;

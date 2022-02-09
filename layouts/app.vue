@@ -13,17 +13,46 @@
         </li>
       </ul>
     </header>
-    <Nuxt />
+    <main>
+      <div class="primary-wrapper">
+        <Nuxt />
+      </div>
+      <div class="tags-wrapper">
+        <h1>Tags</h1>
+
+        <m-tagInput
+          placeholder="Search by tag…"
+          :filter="true"
+          @input="updateTagSearch($event)"
+        />
+
+        <ul class="tags-list">
+          <li v-for="tag in tags" :key="tag.name">
+            <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag.name } }">
+              {{ tag.name }}
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'App',
   data() {
     return {
       loaded: false,
+      tagFilter: null,
     }
+  },
+  computed: {
+    ...mapGetters({
+      tags: 'tags',
+    }),
   },
   async created() {
     try {
@@ -40,6 +69,15 @@ export default {
         await this.$fire.auth.signOut()
       } catch (e) {
         console.error(e) // eslint-disable-line
+      }
+    },
+    updateTagSearch(tags) {
+      this.tagFilter = tags.query
+      if (tags.selectedTags.length === 1) {
+        this.$router.push({
+          name: 'tag-slug',
+          params: { slug: tags.selectedTags[0] },
+        })
       }
     },
   },
@@ -77,5 +115,45 @@ a {
 }
 a:hover {
   text-decoration: none;
+}
+
+main {
+  display: flex;
+}
+
+.primary-wrapper {
+  flex-grow: 1;
+}
+
+.tags-wrapper {
+  width: 30%;
+  padding-left: 20px;
+}
+
+.tags-wrapper ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags-wrapper h1 {
+  padding-left: 10px;
+}
+
+.tags-wrapper .tag-input {
+  margin-left: 10px;
+}
+
+.tags-list li {
+  display: inline-block;
+}
+
+.tags-list a {
+  color: #00a5e0;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
 }
 </style>
