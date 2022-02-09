@@ -21,8 +21,9 @@
         <h1>Tags</h1>
 
         <m-tagInput
+          ref="tagSearch"
           placeholder="Search by tag…"
-          :filter="true"
+          :single-value="true"
           @input="updateTagSearch($event)"
         />
 
@@ -74,6 +75,8 @@ export default {
     updateTagSearch(tags) {
       this.tagFilter = tags.query
       if (tags.selectedTags.length === 1) {
+        this.$refs.tagSearch.$refs.tagInput.$refs.input.blur()
+        // this.$store.commit('updateRefInFocus', 'foo')
         this.$router.push({
           name: 'tag-slug',
           params: { slug: tags.selectedTags[0] },

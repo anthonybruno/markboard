@@ -6,7 +6,6 @@ const getDefaultState = () => {
     bookmarks: [],
     tags: [],
     tagFilter: null,
-    refInFocus: null,
     activeEditBookmark: null,
   }
 }
@@ -23,9 +22,6 @@ export const getters = {
   },
   userId(state) {
     return state.userId
-  },
-  refInFocus(state) {
-    return state.refInFocus
   },
   activeEditBookmark(state) {
     return state.activeEditBookmark
@@ -59,9 +55,6 @@ export const mutations = {
     const { uid } = authUser
     state.userId = uid
     if (isLoggingIn) this.app.router.push({ name: 'index' })
-  },
-  updateRefInFocus(state, refName) {
-    state.refInFocus = refName
   },
   ...vuexfireMutations,
 }

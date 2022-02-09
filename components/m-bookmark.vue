@@ -24,6 +24,7 @@
         placeholder="https://youtu.be/N66hCzg7IMw"
       />
       <m-tagInput
+        ref="tagInput"
         label="Tags"
         placeholder="Books Websites"
         :existing-tags="tags"
@@ -145,6 +146,7 @@ export default {
       this.$store.dispatch('deleteBookmark', this.id)
     },
     updateTags({ newTags, selectedTags }) {
+      this.$refs.tagInput.$refs.tagInput.$refs.input.focus()
       this.newTags = newTags
       this.selectedTags = selectedTags
     },

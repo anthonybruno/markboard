@@ -2,8 +2,8 @@
   <div class="tag-input">
     <m-input
       id="tags"
+      ref="tagInput"
       v-model="query"
-      ref-name="tagInput"
       :label="label"
       type="text"
       :placeholder="placeholder"
@@ -39,13 +39,14 @@ export default {
       type: String,
       default: null,
     },
-    filter: {
-      type: Boolean,
-      default: false,
-    },
     existingTags: {
       type: Array,
       default: () => [],
+    },
+    singleValue: {
+      // Only for a single value to be selected and subsequently reset
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -93,9 +94,8 @@ export default {
       queryArr.pop()
       queryArr.push(name)
       this.query = `${queryArr.join(' ')} `
-      this.$store.commit('updateRefInFocus', null)
-      this.$store.commit('updateRefInFocus', 'newTagInput')
       this.emitTags()
+      console.log('tag chosen')
     },
     emitTags() {
       const tagObj = {
@@ -111,7 +111,10 @@ export default {
             tagObj.newTags.push(tag)
           }
         })
+
         this.$emit('input', tagObj)
+        if (tagObj.selectedTags.length > 0 && this.singleValue)
+          this.resetInput()
       }
     },
     keyboardSelectTag(direction) {
@@ -124,6 +127,9 @@ export default {
     },
     resetSelectedKeyTagIndex() {
       this.keyTagIndex = 0
+    },
+    resetInput() {
+      this.query = null
     },
   },
 }

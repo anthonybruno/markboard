@@ -5,7 +5,7 @@
     </label>
     <input
       :id="id"
-      :ref="refName"
+      ref="input"
       :type="type"
       :value="value"
       :placeholder="placeholder"
@@ -58,9 +58,25 @@ export default {
   },
   watch: {
     refInFocus(newVal, oldVal) {
-      if (newVal === this.refName) this.$refs[this.refName].focus()
+      console.log('refInFocus Watch Triggered', { newVal, oldVal })
     },
   },
+  // methods: {
+  //   performFocusCheck() {
+  //     console.log('performcheck')
+  //     if (this.refInFocus === this.refName) {
+  //       this.setFocus()
+  //     } else {
+  //       this.setBlur()
+  //     }
+  //   },
+  //   setFocus() {
+  //     this.$refs[this.refName].focus()
+  //   },
+  //   setBlur() {
+  //     this.$refs[this.refName].blur()
+  //   },
+  // },
 }
 </script>
 
