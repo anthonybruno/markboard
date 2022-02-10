@@ -6,11 +6,21 @@
       @submit.prevent="newTags ? addBookmarkAndTags() : addBookmark()"
     >
       <m-input
-        id="name"
-        v-model="name"
+        id="url"
+        v-model="url"
         label="Website URL"
         type="text"
         placeholder="https://youtu.be/N66hCzg7IMw"
+      />
+
+      <br /><br />
+
+      <m-input
+        id="title"
+        v-model="title"
+        label="Title"
+        type="text"
+        placeholder="Music Store | Check It Out! With Dr. Steve Brule"
       />
 
       <br /><br />
@@ -39,7 +49,8 @@ export default {
   layout: 'app',
   data() {
     return {
-      name: null,
+      url: null,
+      title: null,
       selectedTags: [],
       newTags: null,
     }
@@ -54,6 +65,17 @@ export default {
     hasTags() {
       return this.tags && this.tags.length > 0
     },
+    hasUrlQuery() {
+      // Determine if we're loading data from the chrome extension
+      return this.$route.query && this.$route.query.url
+    },
+  },
+  created() {
+    if (this.hasUrlQuery) {
+      this.$store.commit('updateExtensionMode', true)
+      this.url = this.$route.query.url
+      this.title = this.$route.query.title
+    }
   },
   methods: {
     updateTags({ newTags, selectedTags }) {
@@ -64,13 +86,17 @@ export default {
       this.$store.dispatch('batchCreateBookmarkTags', {
         newTags: this.newTags,
         selectedTags: this.selectedTags,
-        name: this.name,
+        url: this.url,
+        title: this.title,
+        isExtension: this.hasUrlQuery, // Determine if we're saving data from the chrome extension
       })
     },
     addBookmark() {
       this.$store.dispatch('createBookmark', {
-        name: this.name,
+        url: this.url,
+        title: this.title,
         tags: this.selectedTags,
+        isExtension: this.hasUrlQuery, // Determine if we're saving data from the chrome extension
       })
     },
   },

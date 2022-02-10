@@ -7,6 +7,7 @@ const getDefaultState = () => {
     tags: [],
     tagFilter: null,
     activeEditBookmark: null,
+    extensionMode: false,
   }
 }
 
@@ -26,6 +27,9 @@ export const getters = {
   activeEditBookmark(state) {
     return state.activeEditBookmark
   },
+  extensionMode(state) {
+    return state.extensionMode
+  },
 }
 
 export const mutations = {
@@ -34,6 +38,9 @@ export const mutations = {
   },
   authUser() {
     this.app.router.push({ name: 'index' })
+  },
+  updateExtensionMode(state, isActiveBool) {
+    state.extensionMode = isActiveBool
   },
   updateTags(state, tagsArr) {
     state.tags = tagsArr
@@ -85,7 +92,8 @@ export const actions = {
   unbindTags: firestoreAction(function ({ unbindFirestoreRef }) {
     unbindFirestoreRef('tags', false)
   }),
-  async createBookmark({ commit, state }, { name, tags }) {
+  async createBookmark({ commit, state }, { url, title, tags, isExtension }) {
+    const route = isExtension ? 'bookmark-goodbye' : 'index'
     const docRef = this.$fire.firestore
       .collection('users')
       .doc(state.userId)
@@ -95,13 +103,14 @@ export const actions = {
       id: docRef.id,
       createdAt: Date.now(),
       lastUpdated: Date.now(),
-      name,
+      url,
+      title,
       tags,
     }
     await docRef.set(bookmarkObj)
-    this.$router.push({ name: 'index' })
+    this.$router.push({ name: route })
   },
-  async updateBookmark({ commit, state }, { bookmarkId, name, tags }) {
+  async updateBookmark({ commit, state }, { bookmarkId, url, title, tags }) {
     const docRef = this.$fire.firestore
       .collection('users')
       .doc(state.userId)
@@ -109,12 +118,12 @@ export const actions = {
       .doc(bookmarkId)
     const bookmarkObj = {
       lastUpdated: Date.now(),
-      name,
+      url,
+      title,
       tags,
     }
     await docRef.update(bookmarkObj)
     commit('updateActiveEditBookmark', null)
-    // this.$router.push({ name: 'index' })
   },
   async deleteBookmark({ state }, bookmarkId) {
     await this.$fire.firestore
@@ -135,7 +144,11 @@ export const actions = {
       })
     commit('appendTags', tagName)
   },
-  async batchCreateBookmarkTags({ state }, { newTags, selectedTags, name }) {
+  async batchCreateBookmarkTags(
+    { state },
+    { newTags, selectedTags, url, title, isExtension }
+  ) {
+    const route = isExtension ? 'bookmark-goodbye' : 'index'
     const batch = await this.$fire.firestore.batch()
     const bookmarkRef = this.$fire.firestore
       .collection('users')
@@ -158,12 +171,13 @@ export const actions = {
       id: bookmarkRef.id,
       createdAt: Date.now(),
       lastUpdated: Date.now(),
-      name,
+      url,
+      title,
       tags: [...newTags, ...selectedTags],
     })
 
     batch.commit()
-    this.$router.push({ name: 'index' })
+    this.$router.push({ name: route })
   },
   async batchUpdateBookmarkTags(
     { commit, state },

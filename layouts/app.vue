@@ -17,7 +17,7 @@
       <div class="primary-wrapper">
         <Nuxt />
       </div>
-      <div class="tags-wrapper">
+      <div v-if="!extensionMode" class="tags-wrapper">
         <h1>Tags</h1>
 
         <m-tagInput
@@ -53,6 +53,7 @@ export default {
   computed: {
     ...mapGetters({
       tags: 'tags',
+      extensionMode: 'extensionMode',
     }),
   },
   async created() {

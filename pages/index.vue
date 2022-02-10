@@ -14,7 +14,8 @@
         v-for="bookmark in bookmarks"
         :id="bookmark.id"
         :key="bookmark.id"
-        :name="bookmark.name"
+        :title="bookmark.title"
+        :url="bookmark.url"
         :created="bookmark.createdAt"
         :tags="bookmark.tags"
       />

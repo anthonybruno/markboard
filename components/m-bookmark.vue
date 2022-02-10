@@ -17,11 +17,18 @@
       </header>
 
       <m-input
-        id="name"
-        v-model="newName"
+        id="url"
+        v-model="newUrl"
         label="Website URL"
         type="text"
         placeholder="https://youtu.be/N66hCzg7IMw"
+      />
+      <m-input
+        id="title"
+        v-model="newTitle"
+        label="Title"
+        type="text"
+        placeholder="Music Store | Check It Out! With Dr. Steve Brule"
       />
       <m-tagInput
         ref="tagInput"
@@ -41,7 +48,9 @@
     <template v-else>
       <header>
         <div class="details">
-          <h2>{{ name }}</h2>
+          <h2>
+            <a :href="url">{{ title }}</a>
+          </h2>
           <em>{{ formatDate }}</em>
         </div>
 
@@ -81,7 +90,11 @@ export default {
       type: String,
       required: true,
     },
-    name: {
+    title: {
+      type: String,
+      required: true,
+    },
+    url: {
       type: String,
       required: true,
     },
@@ -96,7 +109,8 @@ export default {
   },
   data() {
     return {
-      newName: this.name,
+      newUrl: this.url,
+      newTitle: this.title,
       newTags: null,
       selectedTags: this.tags,
     }
@@ -124,13 +138,15 @@ export default {
         bookmarkId: this.id,
         newTags: this.newTags,
         selectedTags: this.selectedTags,
-        name: this.newName,
+        url: this.newUrl,
+        title: this.newTitle,
       })
     },
     updateBookmark() {
       this.$store.dispatch('updateBookmark', {
         bookmarkId: this.id,
-        name: this.newName,
+        url: this.newUrl,
+        title: this.newTitle,
         tags: this.selectedTags,
       })
     },
