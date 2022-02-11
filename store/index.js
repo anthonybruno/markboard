@@ -3,7 +3,7 @@ import { vuexfireMutations, firestoreAction } from 'vuexfire'
 const getDefaultState = () => {
   return {
     userId: null,
-    bookmarks: [],
+    bookmarks: null,
     tags: [],
     tagFilter: null,
     activeEditBookmark: null,
@@ -76,7 +76,7 @@ export const actions = {
     if (state.tagFilter)
       ref = ref.where('tags', 'array-contains', state.tagFilter)
 
-    await bindFirestoreRef('bookmarks', ref, { wait: true })
+    await bindFirestoreRef('bookmarks', ref, { reset: false })
   }),
   unbindBookmarks: firestoreAction(function ({ unbindFirestoreRef }) {
     unbindFirestoreRef('bookmarks', false)
