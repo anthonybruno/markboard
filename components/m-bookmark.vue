@@ -16,33 +16,40 @@
         </div>
       </header>
 
-      <m-input
-        id="url"
-        v-model="newUrl"
-        label="Website URL"
-        type="text"
-        placeholder="https://youtu.be/N66hCzg7IMw"
-      />
-      <m-input
-        id="title"
-        v-model="newTitle"
-        label="Title"
-        type="text"
-        placeholder="Music Store | Check It Out! With Dr. Steve Brule"
-      />
-      <m-tagInput
-        ref="tagInput"
-        label="Tags"
-        placeholder="Books Websites"
-        :existing-tags="tags"
-        @input="updateTags($event)"
-      />
+      <form
+        action="#"
+        @submit.prevent="newTags ? updateBookmarkAndTags() : updateBookmark()"
+      >
+        <m-input
+          id="url"
+          ref="url"
+          v-model="newUrl"
+          label="Website URL"
+          type="text"
+          placeholder="https://youtu.be/N66hCzg7IMw"
+        />
+        <m-input
+          id="title"
+          v-model="newTitle"
+          label="Title"
+          type="text"
+          placeholder="Music Store | Check It Out! With Dr. Steve Brule"
+        />
+        <m-tagInput
+          ref="tagInput"
+          label="Tags"
+          placeholder="Books Websites"
+          :existing-tags="tags"
+          @input="updateTags($event)"
+        />
 
-      <br /><br />
-      <m-button
-        label="Update"
-        @click="newTags ? updateBookmarkAndTags() : updateBookmark()"
-      />
+        <br /><br />
+        <m-button
+          label="Update"
+          type="submit"
+          @click="newTags ? updateBookmarkAndTags() : updateBookmark()"
+        />
+      </form>
     </template>
 
     <template v-else>
@@ -150,12 +157,12 @@ export default {
         tags: this.selectedTags,
       })
     },
-    editBookmark() {
-      this.$store.commit('updateActiveEditBookmark', this.id)
-      this.$refs[this.id].focus()
+    async editBookmark() {
+      await this.$store.dispatch('updateBookmarkEdit', this.id)
+      this.$refs.url.$refs.input.focus()
     },
-    cancelEditBookmark() {
-      this.$store.commit('updateActiveEditBookmark', null)
+    async cancelEditBookmark() {
+      await this.$store.dispatch('updateBookmarkEdit', null)
       this.$refs[this.id].blur()
     },
     deleteBookmark() {

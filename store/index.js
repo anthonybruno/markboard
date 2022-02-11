@@ -210,6 +210,9 @@ export const actions = {
     batch.commit()
     commit('updateActiveEditBookmark', null)
   },
+  updateBookmarkEdit({ commit, state }, bookmarkId) {
+    commit('updateActiveEditBookmark', bookmarkId)
+  },
   logout({ dispatch, commit }) {
     const route = this.$router.push({ name: 'signin' })
     function routerPromise() {

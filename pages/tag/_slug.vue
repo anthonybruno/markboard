@@ -25,8 +25,9 @@ export default {
   name: 'IndexPage',
   beforeRouteLeave(to, from, next) {
     this.$store.commit('updateActiveTagFilter', null)
-    this.$store.dispatch('bindBookmarks')
-    next()
+    this.$store.dispatch('bindBookmarks').then(() => {
+      next()
+    })
   },
   layout: 'app',
   middleware: 'is-authenticated',
