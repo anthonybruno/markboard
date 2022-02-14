@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'Signup',
   layout: 'auth',
@@ -30,29 +28,35 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      userId: 'userId',
-    }),
+    userId() {
+      return this.$store.getters.userId
+    },
   },
   methods: {
     async formSubmit() {
-      await this.$fire.auth.createUserWithEmailAndPassword(
-        this.email,
-        this.password
-      )
-      this.createDefaultCollection()
+      try {
+        await this.$fire.auth.createUserWithEmailAndPassword(
+          this.email,
+          this.password
+        )
+        this.createDefaultCollection()
+      } catch (e) {
+        this.$logError(e)
+      }
     },
     async createDefaultCollection() {
-      await this.$fire.auth.signInWithEmailAndPassword(
-        this.email,
-        this.password
-      )
-      await this.$fire.firestore.collection('users').doc(this.userId).set({
-        name: null,
-      })
+      try {
+        await this.$fire.auth.signInWithEmailAndPassword(
+          this.email,
+          this.password
+        )
+        await this.$fire.firestore.collection('users').doc(this.userId).set({
+          name: null,
+        })
+      } catch (e) {
+        this.$logError(e)
+      }
     },
   },
 }
 </script>
-
-<style></style>

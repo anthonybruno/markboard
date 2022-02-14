@@ -18,11 +18,8 @@
 </template>
 
 <script>
-// import { v4 as uuidv4 } from 'uuid'
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'IndexPage',
+  name: 'SlugPage',
   beforeRouteLeave(to, from, next) {
     this.$store.commit('updateActiveTagFilter', null)
     this.$store.dispatch('bindBookmarks').then(() => {
@@ -36,9 +33,9 @@ export default {
     return { slug }
   },
   computed: {
-    ...mapGetters({
-      bookmarks: 'bookmarks',
-    }),
+    bookmarks() {
+      return this.$store.getters.bookmarks
+    },
   },
   created() {
     this.$store.commit('updateActiveTagFilter', this.slug)

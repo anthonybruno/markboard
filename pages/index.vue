@@ -24,25 +24,18 @@
 </template>
 
 <script>
-// import { v4 as uuidv4 } from 'uuid'
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'IndexPage',
   layout: 'app',
   middleware: 'is-authenticated',
-  data() {
-    return {}
-  },
   computed: {
-    ...mapGetters({
-      bookmarks: 'bookmarks',
-    }),
+    bookmarks() {
+      return this.$store.getters.bookmarks
+    },
     hasBookmarks() {
       return this.bookmarks && this.bookmarks.length > 0
     },
   },
-  methods: {},
 }
 </script>
 

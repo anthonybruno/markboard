@@ -25,7 +25,7 @@ export default {
       try {
         await this.$fire.auth.sendPasswordResetEmail(this.email)
       } catch (e) {
-        console.error(e) // eslint-disable-line
+        this.$logError(e)
       }
     },
   },

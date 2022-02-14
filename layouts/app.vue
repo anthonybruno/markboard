@@ -51,33 +51,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      tags: 'tags',
-      extensionMode: 'extensionMode',
-    }),
+    ...mapGetters(['tags', 'extensionMode']),
   },
   async created() {
-    try {
-      await this.$store.dispatch('bindBookmarks')
-      await this.$store.dispatch('bindTags')
-      this.loaded = true
-    } catch (e) {
-      console.error(e)
-    }
+    await this.$store.dispatch('bindBookmarks')
+    await this.$store.dispatch('bindTags')
+    this.loaded = true
   },
   methods: {
     async signOut() {
       try {
         await this.$fire.auth.signOut()
       } catch (e) {
-        console.error(e) // eslint-disable-line
+        this.$logError(e)
       }
     },
     updateTagSearch(tags) {
       this.tagFilter = tags.query
       if (tags.selectedTags.length === 1) {
         this.$refs.tagSearch.$refs.tagInput.$refs.input.blur()
-        // this.$store.commit('updateRefInFocus', 'foo')
         this.$router.push({
           name: 'tag-slug',
           params: { slug: tags.selectedTags[0] },
@@ -89,13 +81,17 @@ export default {
 </script>
 
 <style>
-.wrapper {
-  max-width: 1000px;
-  margin: 30px auto;
+body {
+  background-color: var(--color-body);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+.wrapper {
+  max-width: 1000px;
+  margin: 30px auto;
 }
 header {
   overflow: hidden;

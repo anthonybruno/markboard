@@ -51,32 +51,6 @@ export default {
       },
     },
   },
-  computed: {
-    refInFocus() {
-      return this.$store.getters.refInFocus
-    },
-  },
-  watch: {
-    refInFocus(newVal, oldVal) {
-      console.log('refInFocus Watch Triggered', { newVal, oldVal })
-    },
-  },
-  // methods: {
-  //   performFocusCheck() {
-  //     console.log('performcheck')
-  //     if (this.refInFocus === this.refName) {
-  //       this.setFocus()
-  //     } else {
-  //       this.setBlur()
-  //     }
-  //   },
-  //   setFocus() {
-  //     this.$refs[this.refName].focus()
-  //   },
-  //   setBlur() {
-  //     this.$refs[this.refName].blur()
-  //   },
-  // },
 }
 </script>
 

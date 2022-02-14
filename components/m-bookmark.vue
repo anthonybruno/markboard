@@ -88,8 +88,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'BookmarkItem',
   props: {
@@ -123,10 +121,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      userId: 'userId',
-      activeEditBookmark: 'activeEditBookmark',
-    }),
+    activeEditBookmark() {
+      return this.$store.getters.activeEditBookmark
+    },
     hasTags() {
       return this.tags.length > 0
     },

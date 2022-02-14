@@ -31,20 +31,22 @@ export default {
   },
   methods: {
     async formSubmit() {
-      await this.$fire.auth.signInWithEmailAndPassword(
-        this.email,
-        this.password
-      )
+      try {
+        await this.$fire.auth.signInWithEmailAndPassword(
+          this.email,
+          this.password
+        )
+      } catch (e) {
+        this.$logError(e)
+      }
     },
     async forgotPassword() {
       try {
         await this.$fire.auth.sendPasswordResetEmail(this.email)
       } catch (e) {
-        console.error(e) // eslint-disable-line
+        this.$logError(e)
       }
     },
   },
 }
 </script>
-
-<style></style>

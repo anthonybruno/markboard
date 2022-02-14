@@ -32,10 +32,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      userEmail: 'userEmail',
-      userId: 'userId',
-    }),
+    ...mapGetters(['userEmail', 'userId']),
   },
   methods: {
     async updatePassword() {

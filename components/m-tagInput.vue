@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'TagInput',
   props: {
@@ -56,9 +54,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      tags: 'tags',
-    }),
+    tags() {
+      return this.$store.getters.tags
+    },
     formattedAllTags() {
       const formatted = []
       if (this.tags) {
@@ -95,7 +93,6 @@ export default {
       queryArr.push(name)
       this.query = `${queryArr.join(' ')} `
       this.emitTags()
-      console.log('tag chosen')
     },
     emitTags() {
       const tagObj = {

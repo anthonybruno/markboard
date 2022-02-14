@@ -56,12 +56,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      userEmail: 'userEmail',
-      userId: 'userId',
-      bookmarks: 'bookmarks',
-      tags: 'tags',
-    }),
+    ...mapGetters(['userEmail', 'userId', 'bookmarks', 'tags']),
     hasTags() {
       return this.tags && this.tags.length > 0
     },
@@ -102,21 +97,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.saved-tags ul {
-  margin: 0;
-  margin-bottom: 20px;
-  padding: 0;
-  list-style: none;
-}
-.saved-tags li {
-  display: inline-block;
-  padding: 5px 10px;
-}
-.saved-tags label {
-  display: inline-block;
-  font-weight: 400;
-  font-style: italic;
-}
-</style>

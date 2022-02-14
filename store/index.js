@@ -11,7 +11,6 @@ const getDefaultState = () => {
   }
 }
 
-// export const state = getDefaultState()
 export const state = getDefaultState()
 
 export const getters = {
