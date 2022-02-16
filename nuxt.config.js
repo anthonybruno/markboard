@@ -44,6 +44,16 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'signup',
+        path: '/signup',
+        component: resolve(__dirname, 'pages/login.vue'),
+      })
+    },
+  },
+
   // Firebase configuration: https://firebase.nuxtjs.org/
   firebase: {
     config: {

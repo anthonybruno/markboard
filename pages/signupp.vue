@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>Sign up</h1>
+
     <form @submit="formSubmit()">
       <m-input id="email" v-model="email" label="Email" type="email" />
       <m-input
@@ -9,6 +11,11 @@
         type="password"
       />
       <m-button label="Create account" type="submit" @click="formSubmit()" />
+
+      <p v-if="displayError" class="error">
+        {{ displayError }}
+      </p>
+
       <br /><br />
       <NuxtLink :to="{ name: 'signin' }">Sign in</NuxtLink>
       <br />
@@ -25,6 +32,7 @@ export default {
     return {
       email: null,
       password: null,
+      displayError: null,
     }
   },
   computed: {
@@ -41,6 +49,13 @@ export default {
         )
         this.createDefaultCollection()
       } catch (e) {
+        console.log(e.code)
+        this.displayError = e
+
+        if (e.code === 'auth/email-already-in-use')
+          this.displayError =
+            'Email already in use by another account. Try logging in with Google or Github.'
+
         this.$logError(e)
       }
     },
@@ -60,3 +75,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+form {
+  max-width: 230px;
+}
+</style>

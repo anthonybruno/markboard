@@ -213,7 +213,7 @@ export const actions = {
     commit('updateActiveEditBookmark', bookmarkId)
   },
   logout({ dispatch, commit }) {
-    const route = this.$router.push({ name: 'signin' })
+    const route = this.$router.push({ name: 'login' })
     function routerPromise() {
       return new Promise((resolve) => {
         resolve(route)

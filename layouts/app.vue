@@ -111,7 +111,7 @@ header li {
 }
 
 a {
-  color: #e07a5f;
+  color: #bb4430;
 }
 a:hover {
   text-decoration: none;

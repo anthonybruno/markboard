@@ -28,7 +28,7 @@ export default {
       type: String,
       default: 'primary',
       validator(value) {
-        return ['primary', 'secondary'].includes(value)
+        return ['primary', 'secondary', 'google', 'github'].includes(value)
       },
     },
   },
@@ -39,11 +39,18 @@ export default {
 button {
   appearance: none;
   border: 0;
-  background-color: #00a5e0;
+  background-color: #bb4430;
   color: #fff;
   padding: 5px 10px;
   font-size: 18px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.btn-google {
+  background-color: #4285f4;
+}
+.btn-github {
+  background-color: #181717;
 }
 </style>
