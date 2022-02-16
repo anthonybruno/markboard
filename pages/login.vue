@@ -31,8 +31,21 @@
         label="Password"
         type="password"
       />
+
+      <p v-if="isSignup" class="terms">
+        By continuing signup via email or through our auth providers, you agree
+        to our
+
+        <NuxtLink :to="{ name: 'terms' }">Terms of Service</NuxtLink>,
+        <NuxtLink :to="{ name: 'privacy-policy' }">Privacy Policy</NuxtLink>.
+      </p>
+
       <m-button :label="signupOrLogin" type="submit" @click="formSubmit()" />
     </form>
+
+    <div v-if="displayError" class="errors">
+      <p>{{ displayError.response }}</p>
+    </div>
 
     <br />
     <br />
@@ -52,6 +65,7 @@ export default {
       email: null,
       password: null,
       errorMessage: null,
+      displayError: null,
     }
   },
   computed: {
@@ -89,13 +103,7 @@ export default {
         )
         this.createDefaultCollection()
       } catch (e) {
-        console.log(e.code)
-        this.displayError = e
-
-        if (e.code === 'auth/email-already-in-use')
-          this.displayError =
-            'Email already in use by another account. Try logging in with Google or Github.'
-
+        this.displayError = this.$handleAuthResponse(e.code)
         this.$logError(e)
       }
     },
@@ -141,3 +149,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.errors,
+.terms {
+  width: 240px;
+}
+</style>

@@ -1,19 +1,17 @@
 <template>
   <div class="wrap">
-    <div class="push">
+    <div class="inner">
       <main>
-        <div class="inner">
-          <Nuxt />
-        </div>
+        <Nuxt />
       </main>
-      <m-footer center />
+      <m-footer />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Auth',
+  name: 'Marketing',
 }
 </script>
 
@@ -24,7 +22,7 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
 }
-.push {
+.inner {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -36,11 +34,5 @@ main {
   width: 100%;
   max-width: 600px;
   box-sizing: border-box;
-}
-.inner {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

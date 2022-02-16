@@ -1,41 +1,44 @@
 <template>
   <div v-if="loaded" class="wrapper">
-    <header>
-      <div class="logo">
-        <m-logo />
-      </div>
-      <ul>
-        <li>
-          <NuxtLink :to="{ name: 'settings' }">Settings</NuxtLink>
-        </li>
-        <li>
-          <a href="#" @click.prevent="signOut()">Sign out</a>
-        </li>
-      </ul>
-    </header>
-    <main>
-      <div class="primary-wrapper">
-        <Nuxt />
-      </div>
-      <div v-if="!extensionMode" class="tags-wrapper">
-        <h1>Tags</h1>
-
-        <m-tagInput
-          ref="tagSearch"
-          placeholder="Search by tag…"
-          :single-value="true"
-          @input="updateTagSearch($event)"
-        />
-
-        <ul class="tags-list">
-          <li v-for="tag in tags" :key="tag.name">
-            <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag.name } }">
-              {{ tag.name }}
-            </NuxtLink>
+    <div class="app">
+      <header>
+        <div class="logo">
+          <m-logo />
+        </div>
+        <ul>
+          <li>
+            <NuxtLink :to="{ name: 'settings' }">Settings</NuxtLink>
+          </li>
+          <li>
+            <a href="#" @click.prevent="signOut()">Sign out</a>
           </li>
         </ul>
-      </div>
-    </main>
+      </header>
+      <main>
+        <div class="primary-wrapper">
+          <Nuxt />
+        </div>
+        <div v-if="!extensionMode" class="tags-wrapper">
+          <h1>Tags</h1>
+
+          <m-tagInput
+            ref="tagSearch"
+            placeholder="Search by tag…"
+            :single-value="true"
+            @input="updateTagSearch($event)"
+          />
+
+          <ul class="tags-list">
+            <li v-for="tag in tags" :key="tag.name">
+              <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag.name } }">
+                {{ tag.name }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+      </main>
+    </div>
+    <m-footer />
   </div>
 </template>
 
@@ -81,17 +84,32 @@ export default {
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: var(--color-body);
+  margin: 0;
+  background-color: var(--color-background);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  color: var(--color-text);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
 .wrapper {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
   max-width: 1000px;
-  margin: 30px auto;
+}
+.app {
+  flex-grow: 1;
+  width: 100%;
 }
 header {
   overflow: hidden;
@@ -123,6 +141,9 @@ main {
 
 .primary-wrapper {
   flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .tags-wrapper {

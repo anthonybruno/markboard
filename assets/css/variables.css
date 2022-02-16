@@ -1,9 +1,11 @@
 html {
-  --color-body: #fff;
+  --color-background: #fff;
+  --color-text: #000;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
-    --color-body: #444;
+    --color-background: #444;
+    --color-text: #fff;
   }
 }

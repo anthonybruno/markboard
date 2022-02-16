@@ -1,10 +1,7 @@
 <template>
   <div>
     <h1>Add a new bookmark</h1>
-    <form
-      action=""
-      @submit.prevent="newTags ? addBookmarkAndTags() : addBookmark()"
-    >
+    <form action="" @submit.prevent="evaulateSubmission()">
       <m-input
         id="url"
         v-model="url"
@@ -33,10 +30,11 @@
       />
       <br /><br />
 
-      <m-button
-        label="Save bookmark"
-        @click="newTags ? addBookmarkAndTags() : addBookmark()"
-      />
+      <template v-if="displayError">
+        <p>Hey a URL is required</p>
+      </template>
+
+      <m-button label="Save bookmark" @click="evaulateSubmission()" />
     </form>
   </div>
 </template>
@@ -53,6 +51,7 @@ export default {
       title: null,
       selectedTags: [],
       newTags: null,
+      displayError: false,
     }
   },
   computed: {
@@ -73,6 +72,13 @@ export default {
     }
   },
   methods: {
+    evaulateSubmission() {
+      if (this.url) {
+        this.newTags ? this.addBookmarkAndTags() : this.addBookmark()
+      } else {
+        this.displayError = true
+      }
+    },
     updateTags({ newTags, selectedTags }) {
       this.newTags = newTags
       this.selectedTags = selectedTags
