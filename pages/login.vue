@@ -122,22 +122,11 @@ export default {
     },
     authWithGoogle() {
       const provider = new this.$fireModule.auth.GoogleAuthProvider()
-
-      this.$fire.auth
-        .signInWithPopup(provider)
-        .then((result) => {
-          console.log(result)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      this.$fire.auth.signInWithPopup(provider)
     },
     authWithGithub() {
       const provider = new this.$fireModule.auth.GithubAuthProvider()
-
-      this.$fire.auth.signInWithPopup(provider).then((result) => {
-        console.log(result)
-      })
+      this.$fire.auth.signInWithPopup(provider)
     },
     async forgotPassword() {
       try {
