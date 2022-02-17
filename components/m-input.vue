@@ -62,6 +62,7 @@ label {
   padding-bottom: 3px;
 }
 input {
+  font-family: monospace;
   padding: 5px 10px;
   font-size: 20px;
   margin-bottom: 10px;

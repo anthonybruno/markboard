@@ -60,7 +60,7 @@ export const mutations = {
   updateAuthUser(state, { authUser, isLoggingIn }) {
     const { uid } = authUser
     state.userId = uid
-    if (isLoggingIn) this.app.router.push({ name: 'app' })
+    if (isLoggingIn) this.app.router.push({ name: 'index' })
   },
   ...vuexfireMutations,
 }

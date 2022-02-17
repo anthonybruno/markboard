@@ -37,6 +37,7 @@ export default {
 
 <style scoped>
 button {
+  font-family: monospace;
   appearance: none;
   border: 0;
   background-color: #bb4430;

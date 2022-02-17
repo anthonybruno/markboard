@@ -16,6 +16,10 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: monospace;
+}
+
 .wrap {
   width: 100%;
   max-width: 650px;
