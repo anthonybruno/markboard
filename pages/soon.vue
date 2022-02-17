@@ -72,10 +72,8 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,700;1,400&display=swap');
-
 * {
-  font-family: 'Anonymous Pro', monospace;
+  font-family: monospace;
   font-size: 16px;
   line-height: 1;
 }
