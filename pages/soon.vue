@@ -1,13 +1,18 @@
 <template>
   <div class="wrap">
     <div class="inner">
-      <ol>
-        <template v-if="!goodbye">
-          <li><h2>mrkbrd</h2></li>
-          <li><p>another bookmarking web application</p></li>
-          <li><p>soon</p></li>
-          <template v-if="inquiry">
-            <li>
+      <ol v-if="!goodbye">
+        <li><h2>mrkbrd</h2></li>
+        <li><p>another bookmarking web application</p></li>
+        <li><p>soon</p></li>
+        <li>
+          <button type="button" @click.prevent="initInquiry()">
+            tell me when
+          </button>
+        </li>
+        <template v-if="inquiry">
+          <li>
+            <p>
               <form action="" @submit.prevent="submitInquiry()">
                 <input ref="input" v-model="email" type="email" />
                 <input id="name" v-model="name" type="text" />
@@ -20,16 +25,11 @@
                   execute
                 </button>
               </form>
-            </li>
-          </template>
-          <li v-else>
-            <button type="button" @click.prevent="initInquiry()">
-              tell me when
-            </button>
+            </p>
           </li>
         </template>
-        <h2 v-else>さようなら</h2>
       </ol>
+      <h2 v-else>さようなら</h2>
     </div>
   </div>
 </template>
