@@ -105,6 +105,7 @@ body {
   justify-content: center;
   align-items: center;
   max-width: 1000px;
+  padding: 10px;
 }
 .app {
   flex-grow: 1;
