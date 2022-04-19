@@ -1,27 +1,21 @@
 <template>
   <div>
-    <h1>{{ signupOrLogin }}</h1>
+    <h1 class="mb-5">{{ signupOrLogin }}</h1>
 
     <m-button
       label="Continue with Google"
       type="button"
-      variant="google"
+      class="!block !bg-blue-500 mb-3"
       @click="authWithGoogle()"
     />
-
-    <br /><br />
-
     <m-button
       label="Continue with Github"
       type="button"
-      variant="github"
+      class="!bg-neutral-700"
       @click="authWithGithub()"
     />
 
-    <br /><br />
-    <hr />
-
-    <h3>{{ signupOrLogin }} with email</h3>
+    <h3 class="mt-10">{{ signupOrLogin }} with email</h3>
 
     <form @submit.prevent="formSubmit()">
       <m-input id="email" v-model="email" label="Email" type="email" />
@@ -40,7 +34,12 @@
         <NuxtLink :to="{ name: 'privacy-policy' }">Privacy Policy</NuxtLink>.
       </p>
 
-      <m-button :label="signupOrLogin" type="submit" @click="formSubmit()" />
+      <m-button
+        class="mt-3"
+        :label="signupOrLogin"
+        type="submit"
+        @click="formSubmit()"
+      />
     </form>
 
     <div v-if="displayError" class="errors">

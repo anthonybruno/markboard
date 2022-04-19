@@ -1,14 +1,16 @@
 <template>
   <div>
     <template v-if="!hasBookmarks">
-      <h1>Looks like you don't have any bookmarks yet ya doofus!</h1>
+      <h1 class="pb-5">
+        Looks like you don't have any bookmarks yet ya doofus!
+      </h1>
       <NuxtLink :to="{ name: 'bookmark-add' }">Add a bookmark</NuxtLink>
     </template>
 
     <template v-else>
-      <h1>
+      <h1 class="pb-5">
         Bookmarks
-        <NuxtLink :to="{ name: 'bookmark-add' }">+</NuxtLink>
+        <NuxtLink :to="{ name: 'bookmark-add' }">+ Add</NuxtLink>
       </h1>
       <m-bookmark
         v-for="bookmark in bookmarks"
@@ -38,12 +40,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-}
-</style>

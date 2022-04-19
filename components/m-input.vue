@@ -1,6 +1,6 @@
 <template>
   <div class="input">
-    <label v-if="label" :for="id">
+    <label v-if="label" :for="id" class="block font-bold pt-5 pb-3">
       {{ label }}
     </label>
     <input
@@ -9,6 +9,7 @@
       :type="type"
       :value="value"
       :placeholder="placeholder"
+      class="py-2 px-3 mb-3 text-lg font-mono border rounded border-slate-400"
       @input="$emit('input', $event.target.value)"
       @keyup.down="$emit('down')"
       @keyup.up="$emit('up')"
@@ -53,19 +54,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-label {
-  display: block;
-  font-weight: bold;
-  padding-top: 10px;
-  padding-bottom: 3px;
-}
-input {
-  font-family: monospace;
-  padding: 5px 10px;
-  font-size: 20px;
-  margin-bottom: 10px;
-  border: 1px solid #999;
-}
-</style>

@@ -1,12 +1,12 @@
 <template>
   <div class="wrap">
     <div class="inner">
-      <ol v-if="!goodbye">
+      <ol class="list-decimal leading-6" v-if="!goodbye">
         <li><h2>mrkbrd</h2></li>
         <li><p>another bookmarking web application</p></li>
         <li><p>soon</p></li>
         <li>
-          <button type="button" @click.prevent="initInquiry()">
+          <button class="text-red-700" type="button" @click.prevent="initInquiry()">
             tell me when
           </button>
         </li>

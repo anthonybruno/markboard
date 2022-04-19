@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Add a new bookmark</h1>
+  <div class="w-100">
+    <h1 class="pb-5">Add a new bookmark</h1>
     <form action="" @submit.prevent="evaulateSubmission()">
       <m-input
         id="url"
@@ -10,8 +10,6 @@
         placeholder="https://youtu.be/N66hCzg7IMw"
       />
 
-      <br /><br />
-
       <m-input
         id="title"
         v-model="title"
@@ -20,7 +18,6 @@
         placeholder="Music Store | Check It Out! With Dr. Steve Brule"
       />
 
-      <br /><br />
       <m-tagInput
         label="Tags"
         :filter="false"
@@ -28,13 +25,14 @@
         placeholder="Books Websites"
         @input="updateTags($event)"
       />
-      <br /><br />
 
       <template v-if="displayError">
         <p>Hey a URL is required</p>
       </template>
 
-      <m-button label="Save bookmark" @click="evaulateSubmission()" />
+      <div class="mt-5">
+        <m-button label="Save bookmark" @click="evaulateSubmission()" />
+      </div>
     </form>
   </div>
 </template>

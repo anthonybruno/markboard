@@ -1,5 +1,40 @@
 @tailwind base;
+@layer base {
+  @font-face {
+    font-family: 'Apercu Bold';
+    src: url(../fonts/apercu_bold.woff2) format('woff2'),
+      url(../fonts/apercu_bold.woff) format('woff');
+    font-display: swap;
+  }
 
+  @font-face {
+    font-family: 'Apercu Mono';
+    src: url(../fonts/apercu_mono.woff2) format('woff2'),
+      url(../fonts/apercu_mono.woff) format('woff');
+    font-display: swap;
+  }
+
+  * {
+    @apply box-border;
+  }
+  body {
+    @apply antialiased;
+  }
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  a {
+    @apply text-purple-600;
+  }
+  a:hover {
+    @apply underline;
+  }
+}
 @tailwind components;
-
 @tailwind utilities;

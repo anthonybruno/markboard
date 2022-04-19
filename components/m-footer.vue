@@ -1,5 +1,5 @@
 <template>
-  <footer :class="{ 'is-center': center }">
+  <footer class="w-full pb-20" :class="{ 'text-center': center }">
     <small>
       &copy; Copyright 2022 &nbsp;&nbsp;
       <NuxtLink :to="{ name: 'terms' }">Terms of Service</NuxtLink> &nbsp;&nbsp;
@@ -19,13 +19,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-footer {
-  width: 100%;
-  padding-bottom: 50px;
-}
-.is-center {
-  text-align: center;
-}
-</style>

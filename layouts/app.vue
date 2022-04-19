@@ -1,25 +1,28 @@
 <template>
-  <div v-if="loaded" class="wrapper">
-    <div class="app">
-      <header>
-        <div class="logo">
+  <div
+    v-if="loaded"
+    class="flex flex-col min-h-screen justify-center items-center mx-auto max-w-5xl"
+  >
+    <div class="grow w-full">
+      <header class="flex items-center py-10">
+        <div class="logo grow">
           <m-logo />
         </div>
         <ul>
-          <li>
+          <li class="inline-block pl-2">
             <NuxtLink :to="{ name: 'settings' }">Settings</NuxtLink>
           </li>
-          <li>
+          <li class="inline-block pl-2">
             <a href="#" @click.prevent="signOut()">Sign out</a>
           </li>
         </ul>
       </header>
-      <main>
-        <div class="primary-wrapper">
+      <main class="flex">
+        <div class="grow w-full justify-center items-center flex-col">
           <Nuxt />
         </div>
-        <div v-if="!extensionMode" class="tags-wrapper">
-          <h1>Tags</h1>
+        <div v-if="!extensionMode" class="tags-wrapper w-1/3 pl-10">
+          <h1 class="pb-5">Tags</h1>
 
           <m-tagInput
             ref="tagSearch"
@@ -28,9 +31,12 @@
             @input="updateTagSearch($event)"
           />
 
-          <ul class="tags-list">
-            <li v-for="tag in tags" :key="tag.name">
-              <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag.name } }">
+          <ul class="block">
+            <li v-for="tag in tags" :key="tag.name" class="inline-block">
+              <NuxtLink
+                class="inline-block p-3"
+                :to="{ name: 'tag-slug', params: { slug: tag.name } }"
+              >
                 {{ tag.name }}
               </NuxtLink>
             </li>
@@ -82,90 +88,3 @@ export default {
   },
 }
 </script>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-.wrapper {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-  max-width: 1000px;
-  padding: 10px;
-}
-.app {
-  flex-grow: 1;
-  width: 100%;
-}
-header {
-  overflow: hidden;
-}
-.logo {
-  float: left;
-}
-header ul {
-  list-style: none;
-  padding: 0;
-  height: 100%;
-  float: right;
-}
-header li {
-  display: inline-block;
-  font-weight: bold;
-}
-
-a {
-  color: #bb4430;
-}
-a:hover {
-  text-decoration: none;
-}
-
-main {
-  display: flex;
-}
-
-.primary-wrapper {
-  flex-grow: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.tags-wrapper {
-  width: 30%;
-  padding-left: 20px;
-}
-
-.tags-wrapper ul {
-  display: block;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.tags-wrapper h1 {
-  padding-left: 10px;
-}
-
-.tags-wrapper .tag-input {
-  margin-left: 10px;
-}
-
-.tags-list li {
-  display: inline-block;
-}
-
-.tags-list a {
-  color: #00a5e0;
-  display: inline-block;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 10px;
-}
-</style>

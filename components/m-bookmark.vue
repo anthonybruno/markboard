@@ -1,7 +1,7 @@
 <template>
   <div
     :ref="id"
-    class="bookmark"
+    class="pb-10"
     tabindex="-1"
     @keydown.esc="cancelEditBookmark()"
   >
@@ -53,20 +53,20 @@
     </template>
 
     <template v-else>
-      <header>
-        <div class="details">
+      <header class="flex">
+        <div class="grow">
           <h2>
             <a :href="url">{{ title }}</a>
           </h2>
           <em>{{ formatDate }}</em>
         </div>
 
-        <div class="actions">
-          <ul>
-            <li>
+        <div class="pl-5">
+          <ul class="whitespace-nowrap">
+            <li class="inline-block">
               <a href="#" @click.prevent="editBookmark()">Edit</a>
             </li>
-            <li>
+            <li class="inline-block">
               <a href="#" @click.prevent="deleteBookmark()">Delete</a>
             </li>
           </ul>
@@ -74,7 +74,7 @@
       </header>
 
       <div class="main">
-        <ul v-if="hasTags" class="tags">
+        <ul v-if="hasTags" class="pt-5">
           <li><strong>Tagged</strong></li>
           <li v-for="(tag, tagIndex) in tags" :key="tagIndex">
             <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag } }">
@@ -173,5 +173,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

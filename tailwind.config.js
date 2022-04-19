@@ -13,7 +13,5 @@ module.exports = {
       sans: ['Apercu Bold', 'ui-sans-serif', 'system-ui'],
       mono: ['Apercu Mono', 'monospace', 'ui-monospace', 'SFMono-Regular'],
     },
-    extend: {},
   },
-  plugins: [],
 }

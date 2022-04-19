@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Settings</h1>
+    <h1 class="pb-5">Settings</h1>
 
     <p v-if="message">{{ message }}</p>
 
@@ -147,10 +147,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-#delete-link {
-  display: inline-block;
-  margin: 30px;
-}
-</style>
