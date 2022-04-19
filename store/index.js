@@ -2,7 +2,9 @@ import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 const getDefaultState = () => {
   return {
+    email: null,
     userId: null,
+    providerId: null,
     bookmarks: null,
     tags: [],
     tagFilter: null,
@@ -22,6 +24,14 @@ export const getters = {
   },
   userId(state) {
     return state.userId
+  },
+  providerId(state) {
+    // What sign-in provider are they using?
+    // github, google, or password?
+    return state.providerId
+  },
+  email(state) {
+    return state.email
   },
   activeEditBookmark(state) {
     return state.activeEditBookmark
@@ -58,8 +68,10 @@ export const mutations = {
     state.bookmarks = [bookmarkObj, ...state.bookmarks]
   },
   updateAuthUser(state, { authUser, isLoggingIn }) {
-    const { uid } = authUser
+    const { uid, email } = authUser
     state.userId = uid
+    state.email = email
+    state.providerId = authUser.providerData[0].providerId
     if (isLoggingIn) this.app.router.push({ name: 'index' })
   },
   ...vuexfireMutations,

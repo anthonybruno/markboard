@@ -4,7 +4,11 @@ const defaultError = {
 }
 
 // https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithpopup
-const errorMap = [
+const authMap = [
+  {
+    code: 'auth/user-not-found',
+    response: 'No account associated with this email. Want to sign up instead?',
+  },
   {
     code: 'auth/email-already-in-use',
     response:
@@ -20,15 +24,18 @@ const errorMap = [
     response:
       'We tried to open a popup for login but your computer blocked it. Oh boy.',
   },
+  {
+    code: 'auth/wrong-password',
+    response: 'Invalid password. Please try again.',
+  },
 ]
-
 // General error logging wrapper for Sentry
 export default ({ app }, inject) => {
   inject('logError', (msg) => console.error(msg))
 
   inject('handleAuthResponse', (providedCode) => {
     return (
-      errorMap.find((errMap) => errMap.code === providedCode) || defaultError
+      authMap.find((errMap) => errMap.code === providedCode) || defaultError
     )
   })
 }

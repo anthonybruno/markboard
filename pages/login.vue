@@ -92,6 +92,7 @@ export default {
           this.password
         )
       } catch (e) {
+        this.displayError = this.$handleAuthResponse(e.code)
         this.$logError(e)
       }
     },

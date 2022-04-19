@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap antialiased">
     <div class="push">
       <main>
         <div class="inner">

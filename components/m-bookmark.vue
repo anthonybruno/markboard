@@ -174,46 +174,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.bookmark {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 10px;
-}
-.bookmark + .bookmark {
-  margin-top: 20px;
-}
-
-header {
-  padding-bottom: 5px;
-  overflow: hidden;
-}
-
-header h2 {
-  font-size: 20px;
-  margin: 0;
-}
-
-header .details {
-  float: left;
-}
-header .actions {
-  float: right;
-}
-
-header ul,
-.main ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.main li {
-  display: inline-block;
-}
-.main li + li {
-  padding-left: 5px;
-}
-.tags a {
-  color: #00a5e0;
-}
-</style>
+<style scoped></style>

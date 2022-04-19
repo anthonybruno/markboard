@@ -88,15 +88,6 @@ export default {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  background-color: var(--color-background);
-  font-family: monospace;
-  color: var(--color-text);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
 .wrapper {
   margin: 0 auto;
   display: flex;

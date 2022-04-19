@@ -1,10 +1,11 @@
 <template>
   <button
+    class="inline-block font-mono rounded text-white p-3 bg-indigo-500"
     :type="type"
-    :class="['btn', `btn-${variant}`]"
     @click.prevent="$emit('click')"
   >
     {{ label }}
+    <!-- :class="['btn', `btn-${variant}`]" -->
   </button>
 </template>
 
@@ -36,7 +37,7 @@ export default {
 </script>
 
 <style scoped>
-button {
+/* button {
   font-family: monospace;
   appearance: none;
   border: 0;
@@ -54,4 +55,7 @@ button {
 .btn-github {
   background-color: #181717;
 }
+.btn-secondary {
+  background-color: #a167a5;
+} */
 </style>

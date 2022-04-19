@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Apercu Bold';
+  src: url(../fonts/apercu_bold.woff2) format('woff2'),
+    url(../fonts/apercu_bold.woff) format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Apercu Mono';
+  src: url(../fonts/apercu_mono.woff2) format('woff2'),
+    url(../fonts/apercu_mono.woff) format('woff');
+  font-display: swap;
+}
