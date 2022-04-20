@@ -1,7 +1,7 @@
 <template>
   <div
     :ref="id"
-    class="pb-10"
+    class="pb-10 relative"
     tabindex="-1"
     @keydown.esc="cancelEditBookmark()"
   >
@@ -60,17 +60,6 @@
           </h2>
           <em>{{ formatDate }}</em>
         </div>
-
-        <div class="pl-5">
-          <ul class="whitespace-nowrap">
-            <li class="inline-block">
-              <a href="#" @click.prevent="editBookmark()">Edit</a>
-            </li>
-            <li class="inline-block">
-              <a href="#" @click.prevent="deleteBookmark()">Delete</a>
-            </li>
-          </ul>
-        </div>
       </header>
 
       <div class="main">
@@ -82,6 +71,14 @@
           </li>
         </ul>
       </div>
+      <ul class="whitespace-nowrap absolute top-0 right-full px-3">
+        <li class="block">
+          <a href="#" @click.prevent="editBookmark()">Edit</a>
+        </li>
+        <li class="block">
+          <a href="#" @click.prevent="deleteBookmark()">Delete</a>
+        </li>
+      </ul>
     </template>
   </div>
 </template>
