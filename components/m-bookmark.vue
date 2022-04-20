@@ -75,11 +75,10 @@
 
       <div class="main">
         <ul v-if="hasTags" class="pt-5">
-          <li><strong>Tagged</strong></li>
           <li v-for="(tag, tagIndex) in tags" :key="tagIndex">
-            <NuxtLink :to="{ name: 'tag-slug', params: { slug: tag } }">
+            <m-tag :link="{ name: 'tag-slug', params: { slug: tag } }">
               {{ tag }}
-            </NuxtLink>
+            </m-tag>
           </li>
         </ul>
       </div>

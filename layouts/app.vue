@@ -32,13 +32,10 @@
           />
 
           <ul class="block">
-            <li v-for="tag in tags" :key="tag.name" class="inline-block">
-              <NuxtLink
-                class="inline-block p-3"
-                :to="{ name: 'tag-slug', params: { slug: tag.name } }"
-              >
+            <li v-for="tag in tags" :key="tag.name" class="inline-block p-1">
+              <m-tag :link="{ name: 'tag-slug', params: { slug: tag.name } }">
                 {{ tag.name }}
-              </NuxtLink>
+              </m-tag>
             </li>
           </ul>
         </div>
