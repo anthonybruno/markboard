@@ -17,8 +17,11 @@
   * {
     @apply box-border;
   }
+  *:focus {
+    @apply outline-none;
+  }
   body {
-    @apply antialiased;
+    @apply antialiased h-full min-h-screen;
   }
   h1 {
     @apply text-3xl;
@@ -29,9 +32,9 @@
   h3 {
     @apply text-xl;
   }
-  a {
+  /* a {
     @apply text-purple-600;
-  }
+  } */
   a:hover {
     @apply underline;
   }

@@ -1,6 +1,11 @@
 <template>
   <button
-    class="inline-block font-mono rounded text-white p-3 bg-purple-700"
+    class="inline-block px-3 rounded-full border-2 border-black hover:text-white"
+    :class="[
+      { 'hover:bg-black': isBase },
+      { 'hover:bg-emerald-800 hover:border-emerald-800': success },
+      { 'hover:bg-rose-800 hover:border-rose-800': danger },
+    ]"
     :type="type"
     @click.prevent="$emit('click')"
   >
@@ -24,12 +29,23 @@ export default {
         return ['button', 'submit'].includes(value)
       },
     },
-    variant: {
-      type: String,
-      default: 'primary',
-      validator(value) {
-        return ['primary', 'secondary', 'google', 'github'].includes(value)
-      },
+    success: {
+      type: Boolean,
+      default: false,
+    },
+    danger: {
+      type: Boolean,
+      default: false,
+    },
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    isBase() {
+      const variants = [this.success, this.danger]
+      return variants.includes(true) === false
     },
   },
 }

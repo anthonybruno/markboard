@@ -1,15 +1,12 @@
 <template>
   <div class="input">
-    <label v-if="label" :for="id" class="block font-bold pt-5 pb-3">
-      {{ label }}
-    </label>
     <input
       :id="id"
       ref="input"
       :type="type"
       :value="value"
       :placeholder="placeholder"
-      class="py-2 px-3 mb-3 text-lg font-mono border rounded border-slate-400"
+      class="block w-full py-2 text-lg font-mono border-transparent"
       @input="$emit('input', $event.target.value)"
       @keyup.down="$emit('down')"
       @keyup.up="$emit('up')"
@@ -48,8 +45,12 @@ export default {
       default: 'text',
       required: true,
       validator(value) {
-        return ['text', 'email', 'password'].includes(value)
+        return ['text', 'email', 'password', 'url'].includes(value)
       },
+    },
+    search: {
+      type: Boolean,
+      default: false,
     },
   },
 }

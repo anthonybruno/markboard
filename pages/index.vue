@@ -8,32 +8,41 @@
     </template>
 
     <template v-else>
-      <h1 class="pb-5">
-        Bookmarks
-        <NuxtLink :to="{ name: 'bookmark-add' }">+ Add</NuxtLink>
-      </h1>
-      <m-bookmark
-        v-for="bookmark in bookmarks"
-        :id="bookmark.id"
-        :key="bookmark.id"
-        :title="bookmark.title"
-        :url="bookmark.url"
-        :created="bookmark.createdAt"
-        :tags="bookmark.tags"
-      />
+      <m-bookmark-form :edit="false" v-if="addMode" />
+      <template v-for="(bookmark, index) in bookmarks">
+        <m-bookmark-form
+          v-if="activeEditBookmark === bookmark.id"
+          :key="index"
+          :id="bookmark.id"
+          :title="bookmark.title"
+          :url="bookmark.url"
+          :created="bookmark.createdAt"
+          :tags="bookmark.tags"
+        />
+        <m-bookmark
+          v-else
+          :key="bookmark.id"
+          :id="bookmark.id"
+          :edit="true"
+          :title="bookmark.title"
+          :url="bookmark.url"
+          :created="bookmark.createdAt"
+          :tags="bookmark.tags"
+        />
+      </template>
     </template>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'IndexPage',
   layout: 'app',
   middleware: 'is-authenticated',
   computed: {
-    bookmarks() {
-      return this.$store.getters.bookmarks
-    },
+    ...mapGetters(['activeEditBookmark', 'bookmarks', 'addMode']),
     hasBookmarks() {
       return this.bookmarks && this.bookmarks.length > 0
     },

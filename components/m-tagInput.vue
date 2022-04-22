@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-input">
+  <div class="tag-input w-full block">
     <m-input
       id="tags"
       ref="tagInput"
@@ -7,6 +7,7 @@
       :label="label"
       type="text"
       :placeholder="placeholder"
+      :search="search"
       @input="emitTags()"
       @up="keyboardSelectTag('up')"
       @down="keyboardSelectTag('down')"
@@ -43,6 +44,10 @@ export default {
     },
     singleValue: {
       // Only for a single value to be selected and subsequently reset
+      type: Boolean,
+      default: false,
+    },
+    search: {
       type: Boolean,
       default: false,
     },

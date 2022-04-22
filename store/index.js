@@ -10,6 +10,7 @@ const getDefaultState = () => {
     tagFilter: null,
     activeEditBookmark: null,
     extensionMode: false,
+    addMode: false,
   }
 }
 
@@ -36,6 +37,12 @@ export const getters = {
   activeEditBookmark(state) {
     return state.activeEditBookmark
   },
+  addMode(state) {
+    return state.addMode
+  },
+  tagFilter(state) {
+    return state.tagFilter
+  },
   extensionMode(state) {
     return state.extensionMode
   },
@@ -50,6 +57,9 @@ export const mutations = {
   },
   updateExtensionMode(state, isActiveBool) {
     state.extensionMode = isActiveBool
+  },
+  updateAddMode(state, isAddModeBool) {
+    state.addMode = isAddModeBool
   },
   updateTags(state, tagsArr) {
     state.tags = tagsArr
@@ -104,7 +114,7 @@ export const actions = {
     unbindFirestoreRef('tags', false)
   }),
   async createBookmark({ commit, state }, { url, title, tags, isExtension }) {
-    const route = isExtension ? 'bookmark-goodbye' : 'index'
+    // const route = isExtension ? 'bookmark-goodbye' : 'index'
     const docRef = this.$fire.firestore
       .collection('users')
       .doc(state.userId)
@@ -118,8 +128,8 @@ export const actions = {
       title,
       tags,
     }
+    commit('updateAddMode', false)
     await docRef.set(bookmarkObj)
-    this.$router.push({ name: route })
   },
   async updateBookmark({ commit, state }, { bookmarkId, url, title, tags }) {
     const docRef = this.$fire.firestore
@@ -156,10 +166,10 @@ export const actions = {
     commit('appendTags', tagName)
   },
   async batchCreateBookmarkTags(
-    { state },
+    { state, commit },
     { newTags, selectedTags, url, title, isExtension }
   ) {
-    const route = isExtension ? 'bookmark-goodbye' : 'index'
+    // const route = isExtension ? 'bookmark-goodbye' : 'index'
     const batch = await this.$fire.firestore.batch()
     const bookmarkRef = this.$fire.firestore
       .collection('users')
@@ -187,12 +197,12 @@ export const actions = {
       tags: [...newTags, ...selectedTags],
     })
 
+    commit('updateAddMode', false)
     batch.commit()
-    this.$router.push({ name: route })
   },
   async batchUpdateBookmarkTags(
     { commit, state },
-    { bookmarkId, newTags, selectedTags, name }
+    { bookmarkId, newTags, selectedTags, url, title }
   ) {
     const batch = await this.$fire.firestore.batch()
     const bookmarkRef = this.$fire.firestore
@@ -214,7 +224,8 @@ export const actions = {
 
     batch.update(bookmarkRef, {
       lastUpdated: Date.now(),
-      name,
+      url,
+      title,
       tags: [...newTags, ...selectedTags],
     })
 

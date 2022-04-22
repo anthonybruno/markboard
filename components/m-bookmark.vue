@@ -1,26 +1,21 @@
 <template>
-  <div
-    :ref="id"
-    class="pb-10 relative"
-    tabindex="-1"
-    @keydown.esc="cancelEditBookmark()"
-  >
+  <div :ref="id" tabindex="-1" @keydown.esc="cancelEditBookmark()">
     <template v-if="isEditState">
-      <header>
-        <div class="actions">
-          <ul>
-            <li>
-              <a href="#" @click.prevent="cancelEditBookmark()">Cancel</a>
-            </li>
-          </ul>
-        </div>
-      </header>
-
       <form
+        class="grid grid-cols-5 border-t"
         action="#"
         @submit.prevent="newTags ? updateBookmarkAndTags() : updateBookmark()"
       >
+        <m-tagInput
+          ref="tagInput"
+          label="Tags"
+          placeholder="Books Websites"
+          :existing-tags="tags"
+          @input="updateTags($event)"
+        />
+
         <m-input
+          class="col-span-2"
           id="url"
           ref="url"
           v-model="newUrl"
@@ -35,50 +30,38 @@
           type="text"
           placeholder="Music Store | Check It Out! With Dr. Steve Brule"
         />
-        <m-tagInput
-          ref="tagInput"
-          label="Tags"
-          placeholder="Books Websites"
-          :existing-tags="tags"
-          @input="updateTags($event)"
-        />
 
-        <br /><br />
-        <m-button
-          label="Update"
-          type="submit"
-          @click="newTags ? updateBookmarkAndTags() : updateBookmark()"
-        />
+        <div>
+          <m-button
+            label="Update"
+            type="submit"
+            @click="newTags ? updateBookmarkAndTags() : updateBookmark()"
+          />
+        </div>
       </form>
+      <a href="#" @click.prevent="cancelEditBookmark()">Cancel</a>
     </template>
 
     <template v-else>
-      <header class="flex">
-        <div class="grow">
-          <h2>
-            <a :href="url">{{ title }}</a>
-          </h2>
-          <em>{{ formatDate }}</em>
+      <div class="grid grid-cols-5 border-t p-3">
+        <div class="flex items-center">
+          <m-button-link
+            v-for="(tag, tagIndex) in tags"
+            :key="tagIndex"
+            :to="{ name: 'tag-slug', params: { slug: tag } }"
+          >
+            {{ tag }}
+          </m-button-link>
         </div>
-      </header>
-
-      <div class="main">
-        <ul v-if="hasTags" class="pt-5">
-          <li v-for="(tag, tagIndex) in tags" :key="tagIndex">
-            <m-tag :link="{ name: 'tag-slug', params: { slug: tag } }">
-              {{ tag }}
-            </m-tag>
-          </li>
-        </ul>
+        <h2 class="col-span-2 flex items-center">
+          <a :href="url">{{ title }}</a>
+        </h2>
+        <span class="flex justify-end items-center">{{ formatDate }}</span>
+        <div class="flex justify-end items-center">
+          <m-button label="Edit" @click="editBookmark()" />
+          <m-button :danger="true" label="Delete" @click="deleteBookmark()" />
+        </div>
       </div>
-      <ul class="whitespace-nowrap absolute top-0 right-full px-3">
-        <li class="block">
-          <a href="#" @click.prevent="editBookmark()">Edit</a>
-        </li>
-        <li class="block">
-          <a href="#" @click.prevent="deleteBookmark()">Delete</a>
-        </li>
-      </ul>
     </template>
   </div>
 </template>
@@ -129,7 +112,7 @@ export default {
       })
     },
     isEditState() {
-      return this.id === this.activeEditBookmark
+      return false
     },
   },
   methods: {
@@ -152,7 +135,7 @@ export default {
     },
     async editBookmark() {
       await this.$store.dispatch('updateBookmarkEdit', this.id)
-      this.$refs.url.$refs.input.focus()
+      // this.$refs.url.$refs.input.focus()
     },
     async cancelEditBookmark() {
       await this.$store.dispatch('updateBookmarkEdit', null)

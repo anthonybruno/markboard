@@ -1,8 +1,5 @@
 <template>
-  <NuxtLink
-    class="inline-block bg-amber-400 hover:bg-amber-500 text-white px-2 rounded hover:no-underline"
-    :to="link"
-  >
+  <NuxtLink :to="link">
     <slot />
   </NuxtLink>
 </template>

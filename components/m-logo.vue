@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-5xl tracking-tighter">
+  <h1>
     <NuxtLink to="/">Markboard</NuxtLink>
   </h1>
 </template>

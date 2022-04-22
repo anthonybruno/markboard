@@ -1,5 +1,5 @@
 <template>
-  <footer class="w-full pb-20" :class="{ 'text-center': center }">
+  <footer class="p-3 border-t font-mono text-center">
     <small>
       &copy; Copyright 2022 &nbsp;&nbsp;
       <NuxtLink :to="{ name: 'terms' }">Terms of Service</NuxtLink> &nbsp;&nbsp;
@@ -11,11 +11,5 @@
 <script>
 export default {
   name: 'Footer',
-  props: {
-    center: {
-      type: Boolean,
-      default: false,
-    },
-  },
 }
 </script>

@@ -47,9 +47,9 @@ export default {
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
-        name: 'signup',
-        path: '/signup',
-        component: resolve(__dirname, 'pages/login.vue'),
+        name: 'login',
+        path: '/login',
+        component: resolve(__dirname, 'pages/signup.vue'),
       })
     },
   },

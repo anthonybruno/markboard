@@ -1,10 +1,5 @@
 <template>
   <div>
-    <h1>
-      {{ slug }}
-      <NuxtLink :to="{ name: 'bookmark-add' }">+</NuxtLink>
-    </h1>
-
     <m-bookmark
       v-for="bookmark in bookmarks"
       :id="bookmark.id"
