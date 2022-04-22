@@ -57,17 +57,6 @@ export default {
     hasTags() {
       return this.tags && this.tags.length > 0
     },
-    hasUrlQuery() {
-      // Determine if we're loading data from the chrome extension
-      return this.$route.query && this.$route.query.url
-    },
-  },
-  created() {
-    if (this.hasUrlQuery) {
-      this.$store.commit('updateExtensionMode', true)
-      this.url = this.$route.query.url
-      this.title = this.$route.query.title
-    }
   },
   methods: {
     evaulateSubmission() {
@@ -87,7 +76,6 @@ export default {
         selectedTags: this.selectedTags,
         url: this.url,
         title: this.title,
-        isExtension: this.hasUrlQuery, // Determine if we're saving data from the chrome extension
       })
     },
     addBookmark() {
@@ -95,7 +83,6 @@ export default {
         url: this.url,
         title: this.title,
         tags: this.selectedTags,
-        isExtension: this.hasUrlQuery, // Determine if we're saving data from the chrome extension
       })
     },
   },

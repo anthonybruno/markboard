@@ -9,7 +9,6 @@ const getDefaultState = () => {
     tags: [],
     tagFilter: null,
     activeEditBookmark: null,
-    extensionMode: false,
     addMode: false,
   }
 }
@@ -43,9 +42,6 @@ export const getters = {
   tagFilter(state) {
     return state.tagFilter
   },
-  extensionMode(state) {
-    return state.extensionMode
-  },
 }
 
 export const mutations = {
@@ -54,9 +50,6 @@ export const mutations = {
   },
   authUser() {
     this.app.router.push({ name: 'index' })
-  },
-  updateExtensionMode(state, isActiveBool) {
-    state.extensionMode = isActiveBool
   },
   updateAddMode(state, isAddModeBool) {
     state.addMode = isAddModeBool
@@ -113,8 +106,7 @@ export const actions = {
   unbindTags: firestoreAction(function ({ unbindFirestoreRef }) {
     unbindFirestoreRef('tags', false)
   }),
-  async createBookmark({ commit, state }, { url, title, tags, isExtension }) {
-    // const route = isExtension ? 'bookmark-goodbye' : 'index'
+  async createBookmark({ commit, state }, { url, title, tags }) {
     const docRef = this.$fire.firestore
       .collection('users')
       .doc(state.userId)
@@ -167,9 +159,8 @@ export const actions = {
   },
   async batchCreateBookmarkTags(
     { state, commit },
-    { newTags, selectedTags, url, title, isExtension }
+    { newTags, selectedTags, url, title }
   ) {
-    // const route = isExtension ? 'bookmark-goodbye' : 'index'
     const batch = await this.$fire.firestore.batch()
     const bookmarkRef = this.$fire.firestore
       .collection('users')

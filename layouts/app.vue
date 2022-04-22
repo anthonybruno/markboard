@@ -52,7 +52,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['tags', 'tagFilter', 'extensionMode', 'addMode']),
+    ...mapGetters(['tags', 'tagFilter', 'addMode']),
   },
   async created() {
     await this.$store.dispatch('bindBookmarks')

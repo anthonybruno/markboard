@@ -8,7 +8,7 @@
     </template>
 
     <template v-else>
-      <m-bookmark-form :edit="false" v-if="addMode" />
+      <m-bookmark-form v-if="addMode" :edit="false" />
       <template v-for="(bookmark, index) in bookmarks">
         <m-bookmark-form
           v-if="activeEditBookmark === bookmark.id"
@@ -22,8 +22,8 @@
         />
         <m-bookmark
           v-else
-          :key="bookmark.id"
           :id="bookmark.id"
+          :key="bookmark.id"
           :edit="true"
           :title="bookmark.title"
           :url="bookmark.url"
