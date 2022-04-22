@@ -12,12 +12,13 @@
       <template v-for="(bookmark, index) in bookmarks">
         <m-bookmark-form
           v-if="activeEditBookmark === bookmark.id"
-          :key="index"
           :id="bookmark.id"
+          :key="index"
           :title="bookmark.title"
           :url="bookmark.url"
           :created="bookmark.createdAt"
           :tags="bookmark.tags"
+          :edit="true"
         />
         <m-bookmark
           v-else

@@ -26,8 +26,9 @@
       />
     </div>
     <div class="flex justify-end items-center p-3">
-      <template v-if="edit">
+      <template v-if="edit === true">
         <m-button
+          key="cancel"
           label="Cancel"
           type="button"
           @click="cancelUpdateBookmark()"
