@@ -1,36 +1,27 @@
 <template>
-  <div>
-    <template v-if="!hasBookmarks">
-      <h1 class="pb-5">
-        Looks like you don't have any bookmarks yet ya doofus!
-      </h1>
-      <NuxtLink :to="{ name: 'bookmark-add' }">Add a bookmark</NuxtLink>
-    </template>
-
-    <template v-else>
-      <m-bookmark-form v-if="addMode" :edit="false" />
-      <template v-for="(bookmark, index) in bookmarks">
-        <m-bookmark-form
-          v-if="activeEditBookmark === bookmark.id"
-          :id="bookmark.id"
-          :key="index"
-          :title="bookmark.title"
-          :url="bookmark.url"
-          :created="bookmark.createdAt"
-          :tags="bookmark.tags"
-          :edit="true"
-        />
-        <m-bookmark
-          v-else
-          :id="bookmark.id"
-          :key="bookmark.id"
-          :edit="true"
-          :title="bookmark.title"
-          :url="bookmark.url"
-          :created="bookmark.createdAt"
-          :tags="bookmark.tags"
-        />
-      </template>
+  <div :class="{ 'border-b': noBookmarks }">
+    <m-bookmark-form v-if="addMode || noBookmarks" :edit="false" />
+    <template v-for="(bookmark, index) in bookmarks">
+      <m-bookmark-form
+        v-if="activeEditBookmark === bookmark.id"
+        :id="bookmark.id"
+        :key="index"
+        :title="bookmark.title"
+        :url="bookmark.url"
+        :created="bookmark.createdAt"
+        :tags="bookmark.tags"
+        :edit="true"
+      />
+      <m-bookmark
+        v-else
+        :id="bookmark.id"
+        :key="bookmark.id"
+        :edit="true"
+        :title="bookmark.title"
+        :url="bookmark.url"
+        :created="bookmark.createdAt"
+        :tags="bookmark.tags"
+      />
     </template>
   </div>
 </template>
@@ -44,8 +35,8 @@ export default {
   middleware: 'is-authenticated',
   computed: {
     ...mapGetters(['activeEditBookmark', 'bookmarks', 'addMode']),
-    hasBookmarks() {
-      return this.bookmarks && this.bookmarks.length > 0
+    noBookmarks() {
+      return this.bookmarks && this.bookmarks.length === 0
     },
   },
 }

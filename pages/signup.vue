@@ -3,13 +3,13 @@
     <m-button
       :label="formattedGoogleLabel"
       type="button"
-      class="!block !bg-blue-500 border-blue-500 text-white mb-2"
+      class="!block !bg-blue-500 !border-blue-500 !text-white mb-2"
       @click="authWithGoogle()"
     />
     <m-button
       :label="formattedGithubLabel"
       type="button"
-      class="!bg-black border-black text-white mb-10"
+      class="!bg-black !border-black !text-white mb-10"
       @click="authWithGithub()"
     />
 

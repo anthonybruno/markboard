@@ -1,68 +1,26 @@
 <template>
   <div :ref="id" tabindex="-1" @keydown.esc="cancelEditBookmark()">
-    <template v-if="isEditState">
-      <form
-        class="grid grid-cols-5 border-t"
-        action="#"
-        @submit.prevent="newTags ? updateBookmarkAndTags() : updateBookmark()"
-      >
-        <m-tagInput
-          ref="tagInput"
-          label="Tags"
-          placeholder="Books Websites"
-          :existing-tags="tags"
-          @input="updateTags($event)"
-        />
-
-        <m-input
-          class="col-span-2"
-          id="url"
-          ref="url"
-          v-model="newUrl"
-          label="Website URL"
-          type="text"
-          placeholder="https://youtu.be/N66hCzg7IMw"
-        />
-        <m-input
-          id="title"
-          v-model="newTitle"
-          label="Title"
-          type="text"
-          placeholder="Music Store | Check It Out! With Dr. Steve Brule"
-        />
-
-        <div>
-          <m-button
-            label="Update"
-            type="submit"
-            @click="newTags ? updateBookmarkAndTags() : updateBookmark()"
-          />
-        </div>
-      </form>
-      <a href="#" @click.prevent="cancelEditBookmark()">Cancel</a>
-    </template>
-
-    <template v-else>
-      <div class="grid grid-cols-5 border-t p-3">
-        <div class="flex items-center">
-          <m-button-link
-            v-for="(tag, tagIndex) in tags"
-            :key="tagIndex"
-            :to="{ name: 'tag-slug', params: { slug: tag } }"
-          >
-            {{ tag }}
-          </m-button-link>
-        </div>
-        <h2 class="col-span-2 flex items-center">
-          <a :href="url">{{ title }}</a>
-        </h2>
-        <span class="flex justify-end items-center">{{ formatDate }}</span>
-        <div class="flex justify-end items-center">
-          <m-button label="Edit" @click="editBookmark()" />
-          <m-button :danger="true" label="Delete" @click="deleteBookmark()" />
-        </div>
+    <div class="flex flex-col md:grid md:grid-cols-5 border-t p-3">
+      <div class="md:flex md:items-center flex-wrap">
+        <m-button-link
+          v-for="(tag, tagIndex) in tags"
+          :key="tagIndex"
+          :to="{ name: 'tag-slug', params: { slug: tag } }"
+        >
+          {{ tag }}
+        </m-button-link>
       </div>
-    </template>
+      <h2 class="md:col-span-2 md:flex md:items-center pt-3 md:pt-0">
+        <a :href="url">{{ title }}</a>
+      </h2>
+      <span class="md:flex md:justify-end md:items-center pb-3 md:pb-0">
+        {{ formatDate }}
+      </span>
+      <div class="md:flex md:justify-end md:items-center">
+        <m-button label="Edit" @click="editBookmark()" />
+        <m-button :danger="true" label="Delete" @click="deleteBookmark()" />
+      </div>
+    </div>
   </div>
 </template>
 

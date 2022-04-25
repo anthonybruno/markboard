@@ -1,10 +1,10 @@
 <template>
   <form
-    class="w-full grid grid-cols-5 border-t"
+    class="w-full md:grid md:grid-cols-5 border-t"
     action="#"
     @submit.prevent="newTags ? updateBookmarkAndTags() : updateBookmark()"
   >
-    <div class="border-r p-3">
+    <div class="border-b md:border-r p-3">
       <m-tagInput
         ref="tagInput"
         label="Tags"
@@ -13,10 +13,10 @@
         @input="updateTags($event)"
       />
     </div>
-    <div class="border-r p-3 col-span-2">
+    <div class="border-b md:border-r p-3 md:col-span-2">
       <m-input id="title" v-model="newTitle" type="text" placeholder="Title" />
     </div>
-    <div class="border-r p-3">
+    <div class="border-b md:border-r p-3">
       <m-input
         id="url"
         ref="url"
@@ -25,7 +25,7 @@
         placeholder="URL"
       />
     </div>
-    <div class="flex justify-end items-center p-3">
+    <div class="flex md:justify-end items-center p-3">
       <template v-if="edit === true">
         <m-button
           key="cancel"
@@ -42,6 +42,7 @@
       <m-button
         v-else
         label="Add"
+        class="block w-full md:inline-block md:w-auto"
         :success="true"
         @click="evaulateSubmission()"
       />

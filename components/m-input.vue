@@ -6,7 +6,7 @@
       :type="type"
       :value="value"
       :placeholder="placeholder"
-      class="block w-full py-2 text-lg font-mono border-transparent"
+      class="block w-full p-1 py-2 text-lg font-mono border-transparent bg-transparent dark:text-white"
       @input="$emit('input', $event.target.value)"
       @keyup.down="$emit('down')"
       @keyup.up="$emit('up')"

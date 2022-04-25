@@ -21,7 +21,7 @@
     @apply outline-none;
   }
   body {
-    @apply antialiased h-full min-h-screen;
+    @apply antialiased h-full min-h-screen dark:bg-neutral-900 dark:text-white;
   }
   h1 {
     @apply text-3xl;
@@ -32,9 +32,9 @@
   h3 {
     @apply text-xl;
   }
-  /* a {
-    @apply text-purple-600;
-  } */
+  a {
+    @apply dark:text-white;
+  }
   a:hover {
     @apply underline;
   }

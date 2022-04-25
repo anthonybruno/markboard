@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-2 w-full min-h-screen">
-    <header class="flex justify-center items-center border-r">
+  <div class="grid md:grid-cols-2 w-full min-h-screen">
+    <header class="flex justify-center items-center md:border-r">
       <m-logo />
     </header>
     <main class="flex justify-center items-center">

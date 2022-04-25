@@ -1,10 +1,12 @@
 <template>
   <div v-if="loaded" class="flex flex-col min-h-screen">
-    <header class="flex justify-center items-center p-3">
+    <header
+      class="flex md:justify-center flex-col md:flex-row items-center p-2 md:p-3"
+    >
       <div v-if="tagFilter" class="pr-3">
         <m-button-link :to="{ name: 'index' }"> {{ tagFilter }} </m-button-link>
       </div>
-      <div class="grow">
+      <div class="grow w-full md:w-auto order-2 md:order-1">
         <m-tagInput
           ref="tagSearch"
           placeholder="Search by tag"
@@ -13,9 +15,9 @@
           @input="updateTagSearch($event)"
         />
       </div>
-      <div>
+      <div class="w-full md:w-auto order-1 md:order-2">
         <ul>
-          <li class="inline-block pl-2">
+          <li v-if="isSettings === false" class="inline-block md:pl-2">
             <m-button
               v-if="addMode === true"
               label="Cancel"
@@ -23,10 +25,13 @@
             />
             <m-button v-else label="Add" @click="addBookmark()" />
           </li>
-          <li class="inline-block pl-2">
+          <li v-else class="inline-block pl-1 md:pl-2">
+            <NuxtLink :to="{ name: 'index' }">Home</NuxtLink>
+          </li>
+          <li class="inline-block pl-1 md:pl-2">
             <NuxtLink :to="{ name: 'settings' }">Settings</NuxtLink>
           </li>
-          <li class="inline-block pl-2">
+          <li class="inline-block pl-1 md:pl-2">
             <a href="#" @click.prevent="signOut()">Sign out</a>
           </li>
         </ul>
@@ -53,6 +58,9 @@ export default {
   },
   computed: {
     ...mapGetters(['tags', 'tagFilter', 'addMode']),
+    isSettings() {
+      return this.$route.name === 'settings'
+    },
   },
   async created() {
     await this.$store.dispatch('bindBookmarks')

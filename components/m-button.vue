@@ -1,8 +1,11 @@
 <template>
   <button
-    class="inline-block px-3 rounded-full border-2 border-black hover:text-white"
+    class="inline-block px-3 rounded-full border-2 border-black hover:text-white dark:text-white dark:border-neutral-50"
     :class="[
-      { 'hover:bg-black': isBase },
+      {
+        'hover:bg-black dark:hover:bg-neutral-50 dark:hover:text-neutral-900':
+          isBase,
+      },
       { 'hover:bg-emerald-800 hover:border-emerald-800': success },
       { 'hover:bg-rose-800 hover:border-rose-800': danger },
     ]"
