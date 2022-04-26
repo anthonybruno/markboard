@@ -7,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'mrkbrd',
+    title: 'Markboard',
     htmlAttrs: {
       lang: 'en',
     },
