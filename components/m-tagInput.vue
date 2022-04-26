@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-input w-full block">
+  <div class="tag-input w-full block relative">
     <m-input
       id="tags"
       ref="tagInput"
@@ -12,15 +12,21 @@
       @up="keyboardSelectTag('up')"
       @down="keyboardSelectTag('down')"
       @enter.prevent="keyboardEnter()"
+      @esc="resetInput()"
     />
-    <ul v-if="filteredSavedTags.length > 0">
+    <ul
+      v-if="filteredSavedTags.length > 0"
+      class="w-64 bg-white shadow-lg rounded-lg p-3 border-2 border-black absolute top-full"
+    >
       <li
         v-for="(tag, tagIndex) in filteredSavedTags"
         :key="tagIndex"
-        :class="[{ selected: keyTagIndex === tagIndex }]"
+        class="cursor-pointer"
         @mouseover="keyTagIndex = tagIndex"
       >
-        <a href="#" @click.prevent="tagChosen(tag.name)">{{ tag.name }}</a>
+        <a href="#" class="block" @click.prevent="tagChosen(tag.name)">{{
+          tag.name
+        }}</a>
       </li>
     </ul>
   </div>
@@ -131,36 +137,9 @@ export default {
       this.keyTagIndex = 0
     },
     resetInput() {
+      this.$refs.tagInput.$refs.input.blur()
       this.query = null
     },
   },
 }
 </script>
-
-<style scoped>
-.tag-input {
-  position: relative;
-  display: inline-block;
-}
-ul {
-  box-sizing: border-box;
-  background-color: #fff;
-  border: 1px solid #999;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 100%;
-}
-li.selected {
-  background-color: #f2cc8f;
-}
-li a {
-  display: block;
-  color: #000;
-  text-decoration: none;
-  padding: 3px;
-}
-</style>
