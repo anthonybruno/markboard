@@ -38,8 +38,6 @@ export default {
   layout: 'auth',
   data() {
     return {
-      email: null,
-      password: null,
       errorMessage: null,
       displayError: null,
     }
@@ -60,42 +58,6 @@ export default {
     },
   },
   methods: {
-    // async signIn() {
-    //   try {
-    //     await this.$fire.auth.signInWithEmailAndPassword(
-    //       this.email,
-    //       this.password
-    //     )
-    //   } catch (e) {
-    //     this.displayError = this.$handleAuthResponse(e.code)
-    //     this.$logError(e)
-    //   }
-    // },
-    // async signUp() {
-    //   try {
-    //     await this.$fire.auth.createUserWithEmailAndPassword(
-    //       this.email,
-    //       this.password
-    //     )
-    //     this.createDefaultCollection()
-    //   } catch (e) {
-    //     this.displayError = this.$handleAuthResponse(e.code)
-    //     this.$logError(e)
-    //   }
-    // },
-    async createDefaultCollection() {
-      try {
-        await this.$fire.auth.signInWithEmailAndPassword(
-          this.email,
-          this.password
-        )
-        await this.$fire.firestore.collection('users').doc(this.userId).set({
-          name: null,
-        })
-      } catch (e) {
-        this.$logError(e)
-      }
-    },
     authWithGoogle() {
       const provider = new this.$fireModule.auth.GoogleAuthProvider()
       this.$fire.auth.signInWithPopup(provider)
@@ -104,13 +66,6 @@ export default {
       const provider = new this.$fireModule.auth.GithubAuthProvider()
       this.$fire.auth.signInWithPopup(provider)
     },
-    // async forgotPassword() {
-    //   try {
-    //     await this.$fire.auth.sendPasswordResetEmail(this.email)
-    //   } catch (e) {
-    //     this.$logError(e)
-    //   }
-    // },
   },
 }
 </script>

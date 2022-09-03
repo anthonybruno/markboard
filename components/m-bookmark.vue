@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { formatDistance } from 'date-fns'
+
 export default {
   name: 'BookmarkItem',
   props: {
@@ -58,19 +60,10 @@ export default {
     }
   },
   computed: {
-    activeEditBookmark() {
-      return this.$store.getters.activeEditBookmark
-    },
-    hasTags() {
-      return this.tags.length > 0
-    },
     formatDate() {
-      return this.$dateFns.formatDistance(this.created, new Date(), {
+      return formatDistance(this.created, new Date(), {
         addSuffix: true,
       })
-    },
-    isEditState() {
-      return false
     },
   },
   methods: {
@@ -93,7 +86,6 @@ export default {
     },
     async editBookmark() {
       await this.$store.dispatch('updateBookmarkEdit', this.id)
-      // this.$refs.url.$refs.input.focus()
     },
     async cancelEditBookmark() {
       await this.$store.dispatch('updateBookmarkEdit', null)

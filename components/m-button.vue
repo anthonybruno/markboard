@@ -40,10 +40,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    edit: {
-      type: Boolean,
-      default: false,
-    },
   },
   computed: {
     isBase() {

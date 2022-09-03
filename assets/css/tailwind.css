@@ -1,4 +1,6 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 @layer base {
   @font-face {
     font-family: 'Apercu Bold';
@@ -21,7 +23,7 @@
     @apply outline-none;
   }
   body {
-    @apply antialiased h-full min-h-screen dark:bg-neutral-900 dark:text-white;
+    @apply antialiased h-full min-h-screen dark:bg-black dark:text-white;
   }
   h1 {
     @apply text-3xl;
@@ -33,11 +35,9 @@
     @apply text-xl;
   }
   a {
-    @apply dark:text-white;
+    /* @apply dark:text-white; */
   }
   a:hover {
     @apply underline;
   }
 }
-@tailwind components;
-@tailwind utilities;
