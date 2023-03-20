@@ -20,7 +20,7 @@
     "vuexfire": "^3.2.5"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.14.7",
+    "@babel/eslint-parser": "^7.21.3",
     "@nuxtjs/eslint-config": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.1.0",
     "@nuxtjs/tailwindcss": "^4.2.1",
