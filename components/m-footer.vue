@@ -1,7 +1,7 @@
 <template>
   <footer class="p-3 border-t font-mono text-center">
     <small>
-      &copy; Copyright 2022 &nbsp;&nbsp;
+      &copy; Copyright 2024 &nbsp;&nbsp;
       <NuxtLink :to="{ name: 'terms' }">Terms of Service</NuxtLink> &nbsp;&nbsp;
       <NuxtLink :to="{ name: 'privacy-policy' }"> Privacy Policy </NuxtLink>
     </small>
