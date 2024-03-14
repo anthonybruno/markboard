@@ -1,13 +1,16 @@
-[![Markboard thumbnail](https://cool-stud.imgix.net/global/mrkbrd-thumb-2.png?auto=compress,format&cs=srgb&w=2500)](https://mrkbrd.com)
+## 📌 About
 
-## Markboard
+Markboard strives to create a modern, mobile-first solution for efficiently managing all your bookmarks.
 
-Laudantium molestiae voluptatibus est qui. Quia aliquam vel sed dolorem sint. Sunt inventore sequi saepe. Et assumenda pariatur qui ab laborum. Fugiat corporis itaque adipisci nesciunt quam quaerat illum.
+By starting from the ground up, this project has given me the opportunity to be involved in all facets from concepts to full stack development. I've overseen the entire product creation process and have shipped at scale.
 
-[**Visit Markboard**](https://mrkbrd.com) or [**Read more about it**](https://coolstud.io)
+- [Create an account ↗](https://mrkbrd.com)
+- [View case study ↗](https://abruno.net/project/markboard)
 
-### Built with
+## ✨ Built with
 
-- Nuxt 2 & Vue.js 2
-- Tailwind CSS
+- Vue.js
+- Nuxt
+- Tailwind
 - Firebase
+- Jest
