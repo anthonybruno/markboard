@@ -11,5 +11,3 @@ Laudantium molestiae voluptatibus est qui. Quia aliquam vel sed dolorem sint. Su
 - Nuxt 2 & Vue.js 2
 - Tailwind CSS
 - Firebase
-- Node 16.14
-- NPM 8.3.1
